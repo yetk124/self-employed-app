@@ -1,13 +1,26 @@
 /// <reference types="vitest/config" />
 import { resolve } from 'node:path'
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+
+/** 개발 서버: /app/ledger 처럼 앱 안 주소로 바로 들어가도 앱 화면이 뜨게 (배포는 vercel.json 이 같은 일을 함) */
+const appFallback = (): Plugin => ({
+  name: 'app-fallback',
+  configureServer(server) {
+    server.middlewares.use((req, _res, next) => {
+      const url = req.url ?? ''
+      if (/^\/app(\/[^.]*)?(\?.*)?$/.test(url) && !url.startsWith('/app/index.html')) req.url = '/app/index.html'
+      next()
+    })
+  },
+})
 
 // 페이지 두 개: / (소개 랜딩) 와 /app/ (domain 앱, PWA)
 export default defineConfig({
   resolve: { alias: { '@': resolve(import.meta.dirname, 'src') } },
   plugins: [
+    appFallback(),
     react(),
     VitePWA({
       registerType: 'autoUpdate',

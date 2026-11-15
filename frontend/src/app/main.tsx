@@ -1,21 +1,25 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router'
 import { registerSW } from 'virtual:pwa-register'
 import '@fontsource/jua'
 import '@fontsource/gowun-dodum'
 import './app.css'
 import { initAnalytics } from '@/shared/analytics'
 import App from './App'
-import AppProvider from './AppProvider'
+import UiProvider from './state/UiProvider'
 
 initAnalytics()
 registerSW({ immediate: true })
 
+// 앱 주소: /app/ (홈) · /app/metrics · /app/ledger · /app/manage?tab= · /app/settings · /app/auth · /app/onboarding
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AppProvider>
-      <App />
-    </AppProvider>
+    <BrowserRouter basename="/app">
+      <UiProvider>
+        <App />
+      </UiProvider>
+    </BrowserRouter>
   </StrictMode>,
 )
 
