@@ -1,0 +1,473 @@
+[
+ {
+  "name": "쌀",
+  "aliases": [
+   "백미",
+   "쌀20kg",
+   "햅쌀",
+   "멥쌀"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "양파",
+  "aliases": [
+   "깐양파",
+   "적양파",
+   "양파망",
+   "국산양파"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "대파",
+  "aliases": [
+   "파",
+   "쪽파",
+   "실파",
+   "손질대파"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "마늘",
+  "aliases": [
+   "깐마늘",
+   "다진마늘",
+   "통마늘",
+   "편마늘"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "돼지고기",
+  "aliases": [
+   "돈육",
+   "돼지",
+   "돼지고기 앞다리",
+   "앞다리살",
+   "뒷다리살",
+   "삼겹살",
+   "목살",
+   "돼지 등심"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "소고기",
+  "aliases": [
+   "우육",
+   "한우",
+   "소고기 양지",
+   "양지",
+   "채끝",
+   "불고기용",
+   "소고기 불고기용"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "닭고기",
+  "aliases": [
+   "생닭",
+   "닭",
+   "닭가슴살",
+   "닭날개",
+   "닭다리",
+   "윙"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "김치",
+  "aliases": [
+   "배추김치",
+   "포기김치",
+   "맛김치",
+   "국산김치"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "두부",
+  "aliases": [
+   "찌개두부",
+   "부침두부",
+   "순두부"
+  ],
+  "default_unit": "모"
+ },
+ {
+  "name": "계란",
+  "aliases": [
+   "달걀",
+   "란",
+   "특란",
+   "왕란",
+   "대란"
+  ],
+  "default_unit": "개"
+ },
+ {
+  "name": "고춧가루",
+  "aliases": [
+   "고추가루",
+   "청양고춧가루"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "고추장",
+  "aliases": [
+   "태양초고추장"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "된장",
+  "aliases": [
+   "재래된장",
+   "시골된장"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "간장",
+  "aliases": [
+   "진간장",
+   "국간장",
+   "양조간장"
+  ],
+  "default_unit": "ml"
+ },
+ {
+  "name": "애호박",
+  "aliases": [
+   "호박",
+   "쥬키니"
+  ],
+  "default_unit": "개"
+ },
+ {
+  "name": "식용유",
+  "aliases": [
+   "콩기름",
+   "카놀라유",
+   "튀김유",
+   "대두유"
+  ],
+  "default_unit": "ml"
+ },
+ {
+  "name": "올리브유",
+  "aliases": [
+   "엑스트라버진",
+   "올리브오일"
+  ],
+  "default_unit": "ml"
+ },
+ {
+  "name": "우유",
+  "aliases": [
+   "흰우유",
+   "멸균우유",
+   "서울우유"
+  ],
+  "default_unit": "ml"
+ },
+ {
+  "name": "생크림",
+  "aliases": [
+   "휘핑크림",
+   "동물성생크림"
+  ],
+  "default_unit": "ml"
+ },
+ {
+  "name": "원두",
+  "aliases": [
+   "커피원두",
+   "에스프레소원두",
+   "블렌드원두"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "얼음",
+  "aliases": [
+   "각얼음",
+   "식용얼음"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "양상추",
+  "aliases": [
+   "양배추",
+   "로메인",
+   "상추"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "방울토마토",
+  "aliases": [
+   "토마토",
+   "대추방울토마토"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "떡",
+  "aliases": [
+   "떡볶이떡",
+   "가래떡",
+   "밀떡",
+   "쌀떡"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "어묵",
+  "aliases": [
+   "오뎅",
+   "사각어묵",
+   "부산어묵"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "단무지",
+  "aliases": [
+   "꼬마단무지",
+   "김밥단무지"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "김",
+  "aliases": [
+   "김밥김",
+   "조미김",
+   "구운김"
+  ],
+  "default_unit": "장"
+ },
+ {
+  "name": "연어",
+  "aliases": [
+   "생연어",
+   "훈제연어",
+   "노르웨이연어"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "새우",
+  "aliases": [
+   "칵테일새우",
+   "냉동새우",
+   "흰다리새우"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "오징어",
+  "aliases": [
+   "생물오징어",
+   "냉동오징어",
+   "건오징어",
+   "마른오징어"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "숙주",
+  "aliases": [
+   "숙주나물"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "모짜렐라",
+  "aliases": [
+   "모짜렐라치즈",
+   "피자치즈"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "베이컨",
+  "aliases": [
+   "슬라이스베이컨"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "파스타면",
+  "aliases": [
+   "스파게티",
+   "스파게티면",
+   "펜네"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "중화면",
+  "aliases": [
+   "짜장면",
+   "생면",
+   "중면"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "라멘면",
+  "aliases": [
+   "라면사리",
+   "생라멘"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "쌀국수면",
+  "aliases": [
+   "쌀국수",
+   "라이스누들"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "춘장",
+  "aliases": [
+   "짜장소스"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "전분",
+  "aliases": [
+   "감자전분",
+   "옥수수전분"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "튀김가루",
+  "aliases": [
+   "부침가루",
+   "튀김믹스"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "빵가루",
+  "aliases": [
+   "습식빵가루",
+   "건식빵가루"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "설탕",
+  "aliases": [
+   "백설탕",
+   "흑설탕"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "소금",
+  "aliases": [
+   "천일염",
+   "꽃소금"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "아보카도",
+  "aliases": [],
+  "default_unit": "개"
+ },
+ {
+  "name": "라임",
+  "aliases": [
+   "레몬"
+  ],
+  "default_unit": "개"
+ },
+ {
+  "name": "고수",
+  "aliases": [
+   "실란트로"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "생맥주",
+  "aliases": [
+   "맥주",
+   "케그"
+  ],
+  "default_unit": "ml"
+ },
+ {
+  "name": "소주",
+  "aliases": [
+   "참이슬",
+   "처음처럼"
+  ],
+  "default_unit": "병"
+ },
+ {
+  "name": "포장 용기",
+  "aliases": [
+   "도시락 용기",
+   "샐러드 용기",
+   "포장 박스",
+   "컵·뚜껑",
+   "일회용기",
+   "테이크아웃컵"
+  ],
+  "default_unit": "개"
+ },
+ {
+  "name": "치킨무",
+  "aliases": [
+   "무절임"
+  ],
+  "default_unit": "개"
+ },
+ {
+  "name": "슬라이스 치즈",
+  "aliases": [
+   "체다치즈",
+   "치즈"
+  ],
+  "default_unit": "장"
+ },
+ {
+  "name": "버거 번",
+  "aliases": [
+   "햄버거빵",
+   "번"
+  ],
+  "default_unit": "개"
+ },
+ {
+  "name": "냉동 감자",
+  "aliases": [
+   "감자튀김",
+   "프렌치프라이"
+  ],
+  "default_unit": "g"
+ },
+ {
+  "name": "감자",
+  "aliases": [
+   "수미감자",
+   "햇감자"
+  ],
+  "default_unit": "g"
+ }
+]

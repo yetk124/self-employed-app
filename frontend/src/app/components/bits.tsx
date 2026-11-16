@@ -1,6 +1,6 @@
 /** 화면 여러 곳에서 쓰는 작은 조각들 */
 import { useState, type ReactNode } from 'react'
-import { BIZ, SAMPLE_IMG } from '../data/templates'
+import { BIZ } from '../data/templates'
 import type { Tx } from '../lib/insights'
 import { won } from '../lib/format'
 import { useUi } from '../state/ui'
@@ -21,7 +21,17 @@ export function PageTitle({ children, right }: { children: ReactNode; right?: Re
 }
 
 /** 카드 머리: 아이콘 + 제목 + 오른쪽 */
-export function CardHead({ icon, title, right, id }: { icon?: IconName; title: ReactNode; right?: ReactNode; id: string }) {
+export function CardHead({
+  icon,
+  title,
+  right,
+  id,
+}: {
+  icon?: IconName
+  title: ReactNode
+  right?: ReactNode
+  id: string
+}) {
   return (
     <div className="c2-h">
       <h2 id={id}>
@@ -128,8 +138,8 @@ export function TxRow({ x }: { x: Tx }) {
 }
 
 /** 메뉴·식자재 썸네일 */
-export function Thumb({ o, kind }: { o: { id: string; img?: string }; kind: 'menu' | 'ing' }) {
-  const src = o.img || (kind === 'menu' && SAMPLE_IMG[o.id])
+export function Thumb({ o }: { o: { id: string; img?: string }; kind?: 'menu' | 'ing' }) {
+  const src = o.img
   if (src)
     return (
       <span className="thumb">

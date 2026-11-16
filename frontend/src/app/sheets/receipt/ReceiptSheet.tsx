@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { track } from '@/shared/analytics'
 import { toast } from '@/shared/toast'
 import { hasServer } from '../../api/client'
+import { flush, pull, serverId, syncOn } from '../../api/sync'
 import { confirmReceipt, parseReceiptPhoto, parseReceiptText } from '../../api/endpoints'
 import Icon from '../../components/Icon'
 import Sheet from '../../components/Sheet'
@@ -10,7 +11,16 @@ import { findIng, unitPrice } from '../../lib/calc'
 import { todayKey } from '../../lib/date'
 import { fmtUnit, uid, won } from '../../lib/format'
 import { shrink } from '../../lib/image'
-import { matchIng, parseReceipt, rcPlan, SAMPLE_RECEIPT, toItems, type Parsed, type Plan, type RcItem } from '../../lib/receipt'
+import {
+  matchIng,
+  parseReceipt,
+  rcPlan,
+  SAMPLE_RECEIPT,
+  toItems,
+  type Parsed,
+  type Plan,
+  type RcItem,
+} from '../../lib/receipt'
 import { store, useStore } from '../../state/store'
 import { useUi } from '../../state/ui'
 import type { ReceiptParseRes } from '../../types/api'
@@ -23,7 +33,13 @@ const fromServer = (j: ReceiptParseRes): Parsed => ({
   date: j.date,
   store: j.vendor,
   total: j.total,
-  items: j.items.map((it) => ({ name: it.name, qty: it.qty, unit: it.unit, amount: it.amount, match: it.auto_match != null ? String(it.auto_match) : undefined })),
+  items: j.items.map((it) => ({
+    name: it.name,
+    qty: it.qty,
+    unit: it.unit,
+    amount: it.amount,
+    match: it.auto_match != null ? String(it.auto_match) : undefined,
+  })),
 })
 
 /**
@@ -38,20 +54,37 @@ export default function ReceiptSheet() {
   const [msg, setMsg] = useState('')
   const [text, setText] = useState('')
   const [img, setImg] = useState('')
-  const [meta, setMeta] = useState({ date: todayKey(), store: '', total: 0, source: 'text' as ReceiptSource, raw: '', imagePath: '' })
+  const [meta, setMeta] = useState({
+    date: todayKey(),
+    store: '',
+    total: 0,
+    source: 'text' as ReceiptSource,
+    raw: '',
+    imagePath: '',
+  })
   const [items, setItems] = useState<RcItem[]>([])
   const [plan, setPlan] = useState<Plan | null>(null)
   const body = useRef<HTMLDivElement>(null)
 
   const fromParsed = (p: Parsed, source: ReceiptSource, raw: string, imagePath = '') => {
     const t = todayKey()
-    setMeta({ date: p.date && p.date <= t ? p.date : t, store: p.store || '', total: +p.total || 0, source, raw, imagePath })
+    setMeta({
+      date: p.date && p.date <= t ? p.date : t,
+      store: p.store || '',
+      total: +p.total || 0,
+      source,
+      raw,
+      imagePath,
+    })
     setItems(toItems(store.get(), p))
     setStep('confirm')
   }
 
   const fail = (e: unknown) => {
-    const m = e instanceof Error && e.message && !/fetch|network/i.test(e.message) ? e.message : '인식 서버에 연결하지 못했어요.'
+    const m =
+      e instanceof Error && e.message && !/fetch|network/i.test(e.message)
+        ? e.message
+        : '인식 서버에 연결하지 못했어요.'
     setErr(m + ' 글자로 붙여넣거나 예시 영수증으로 확인 화면을 써 볼 수 있어요.')
     setStep('pick')
   }
@@ -108,7 +141,7 @@ export default function ReceiptSheet() {
     setStep('review')
   }
 
-  const save = () => {
+  const save = async () => {
     const P = plan
     if (!P || !(P.upd.length + P.add.length)) return toast('반영할 품목이 없어요.')
     const keys = ['name', 'qty', 'unit', 'amount'] as const
@@ -124,7 +157,9 @@ export default function ReceiptSheet() {
     const applied = P.upd.length + P.add.length
     const rec = {
       id: uid(),
-      items: items.filter((it) => it.name).map((it) => ({ name: it.name, qty: +it.qty || 0, unit: it.unit || '', amount: +it.amount || 0 })),
+      items: items
+        .filter((it) => it.name)
+        .map((it) => ({ name: it.name, qty: +it.qty || 0, unit: it.unit || '', amount: +it.amount || 0 })),
       date: meta.date,
       store: meta.store,
       total: meta.total || [...P.upd.map((u) => u.it), ...P.add].reduce((a, i) => a + +i.amount, 0),
@@ -134,32 +169,59 @@ export default function ReceiptSheet() {
       source: meta.source,
       savedAt: new Date().toISOString(),
     }
-    store.update((s) => {
-      s.ings = P.ings
-      s.receipts.unshift(rec)
-      s.receipts = s.receipts.slice(0, 100)
-      s.sample = false
-    })
-    if (hasServer) {
-      const mis = new Set(P.mism.map((x) => x.it))
-      confirmReceipt({
-        purchased_at: rec.date,
-        vendor: rec.store,
-        total: rec.total,
-        ocr_source: rec.source,
-        image_path: meta.imagePath || null,
-        raw_text: meta.raw || null,
-        fields_total: fields,
-        fields_edited: edited,
-        items: items.map((i) => {
-          const action = P.skip.includes(i) || mis.has(i) ? 'skip' : P.add.includes(i) ? 'new' : 'update'
-          return { name: i.name, qty: +i.qty, unit: i.unit, amount: +i.amount, action, ingredient_id: action === 'update' ? i.match : null }
-        }),
-      }).catch(() => toast('기기에는 저장했지만 서버 저장에 실패했어요.'))
+    const mis = new Set(P.mism.map((x) => x.it))
+    const body = {
+      purchased_at: rec.date,
+      vendor: rec.store,
+      total: rec.total,
+      ocr_source: rec.source,
+      image_path: meta.imagePath || null,
+      raw_text: meta.raw || null,
+      fields_total: fields,
+      fields_edited: edited,
+      items: items.map((i) => {
+        const action =
+          P.skip.includes(i) || mis.has(i)
+            ? ('skip' as const)
+            : P.add.includes(i)
+              ? ('new' as const)
+              : ('update' as const)
+        return {
+          name: i.name,
+          qty: +i.qty,
+          unit: i.unit,
+          amount: +i.amount,
+          action,
+          ingredient_id: action === 'update' ? (serverId('ing', i.match) ?? null) : null,
+        }
+      }),
+    }
+    if (syncOn()) {
+      // 서버 가게에 연결돼 있으면: 서버에 반영하고 서버 데이터로 다시 맞춤 (새 식자재 id 도 서버 기준)
+      setStep('loading')
+      setMsg('저장하는 중이에요')
+      try {
+        await flush()
+        await confirmReceipt(body)
+        await pull()
+      } catch (e) {
+        setStep('review')
+        return toast(e instanceof Error ? e.message : '서버에 저장하지 못했어요. 잠시 후 다시 시도해 주세요.')
+      }
+    } else {
+      store.update((s) => {
+        s.ings = P.ings
+        s.receipts.unshift(rec)
+        s.receipts = s.receipts.slice(0, 100)
+      })
     }
     track('receipt_save', { items: applied, edited })
     close()
-    toast(`저장했어요. 식자재 ${applied}개 반영` + (P.menus.length ? `, 메뉴 ${P.menus.length}개 원가가 바뀌었어요.` : '.') + (P.past ? ` 지난 ${P.past.days}일 장부도 다시 계산했어요.` : ''))
+    toast(
+      `저장했어요. 식자재 ${applied}개 반영` +
+        (P.menus.length ? `, 메뉴 ${P.menus.length}개 원가가 바뀌었어요.` : '.') +
+        (P.past ? ` 지난 ${P.past.days}일 장부도 다시 계산했어요.` : ''),
+    )
   }
 
   const title = step === 'review' ? '저장 전 확인' : step === 'confirm' ? '인식 결과 수정' : '영수증 인식'
@@ -204,7 +266,15 @@ export default function ReceiptSheet() {
         <>
           <label className="field">
             <span>영수증 글자</span>
-            <textarea autoFocus autoComplete="off" name="rc-ta" className="ta" placeholder="예: 양파 3kg 6,900…" value={text} onChange={(e) => setText(e.target.value)} />
+            <textarea
+              autoFocus
+              autoComplete="off"
+              name="rc-ta"
+              className="ta"
+              placeholder="예: 양파 3kg 6,900…"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
           </label>
           <div className="row" style={{ marginTop: 12 }}>
             <button className="btn" onClick={() => setStep('pick')}>
@@ -233,7 +303,20 @@ export default function ReceiptSheet() {
           items={items}
           setItem={setItem}
           del={(i) => setItems(items.filter((_, j) => j !== i))}
-          add={() => setItems([...items, { key: uid(), name: '', qty: 1, unit: '개', amount: 0, match: 'new', o: { name: '', qty: '', unit: '', amount: '' } }])}
+          add={() =>
+            setItems([
+              ...items,
+              {
+                key: uid(),
+                name: '',
+                qty: 1,
+                unit: '개',
+                amount: 0,
+                match: 'new',
+                o: { name: '', qty: '', unit: '', amount: '' },
+              },
+            ])
+          }
         />
       )}
       {step === 'review' && plan && <ReviewStep plan={plan} meta={meta} />}
@@ -241,16 +324,37 @@ export default function ReceiptSheet() {
   )
 }
 
-function PickStep({ err, onFile, onText, onSample }: { err: string; onFile: (f: File) => void; onText: () => void; onSample: () => void }) {
+function PickStep({
+  err,
+  onFile,
+  onText,
+  onSample,
+}: {
+  err: string
+  onFile: (f: File) => void
+  onText: () => void
+  onSample: () => void
+}) {
   const { open } = useUi()
   return (
     <>
       <label className="drop" htmlFor="rc-file">
         <Icon name="cam" />
         <span>영수증 사진 찍기 · 앨범에서 고르기</span>
-        <small>{hasServer ? '사진을 올리면 품목·양·금액을 자동으로 읽어요' : '체험 모드예요 · 사진 인식은 서버 연결 후 열려요'}</small>
+        <small>
+          {hasServer
+            ? '사진을 올리면 품목·양·금액을 자동으로 읽어요'
+            : '체험 모드예요 · 사진 인식은 서버 연결 후 열려요'}
+        </small>
       </label>
-      <input type="file" id="rc-file" accept="image/*" capture="environment" hidden onChange={(e) => e.target.files?.[0] && onFile(e.target.files[0])} />
+      <input
+        type="file"
+        id="rc-file"
+        accept="image/*"
+        capture="environment"
+        hidden
+        onChange={(e) => e.target.files?.[0] && onFile(e.target.files[0])}
+      />
       <div className="opts">
         <button className="opt" onClick={onText}>
           <span className="opt-i">
@@ -273,10 +377,7 @@ function PickStep({ err, onFile, onText, onSample }: { err: string; onFile: (f: 
           <Icon name="chevThin" className="chev" />
         </button>
       </div>
-      <button
-        className="how"
-        onClick={() => open({ kind: 'guide', thenReceipt: true })}
-      >
+      <button className="how" onClick={() => open({ kind: 'guide', thenReceipt: true })}>
         처음이라면 사용법 보기
       </button>
       {err && (
@@ -318,11 +419,24 @@ function ConfirmStep({
       <div className="grid2">
         <label className="field">
           <span>구매일</span>
-          <input autoComplete="off" name="rc-date" className="inp num" type="date" value={meta.date} onChange={(e) => setMeta({ date: e.target.value })} />
+          <input
+            autoComplete="off"
+            name="rc-date"
+            className="inp num"
+            type="date"
+            value={meta.date}
+            onChange={(e) => setMeta({ date: e.target.value })}
+          />
         </label>
         <label className="field">
           <span>구매처</span>
-          <input autoComplete="off" name="rc-store" className="inp" value={meta.store} onChange={(e) => setMeta({ store: e.target.value })} />
+          <input
+            autoComplete="off"
+            name="rc-store"
+            className="inp"
+            value={meta.store}
+            onChange={(e) => setMeta({ store: e.target.value })}
+          />
         </label>
       </div>
       <p className="hint">읽어 온 내용을 확인하세요. 고친 칸은 회색으로 표시돼요.</p>
@@ -356,8 +470,22 @@ function ConfirmStep({
           return (
             <div className="ocr" key={it.key}>
               <div className="r1">
-                <input autoComplete="off" name={`rc-n-${i}`} className={'inp' + ed('name')} defaultValue={it.name} onBlur={(e) => setItem(i, 'name', e.target.value)} aria-label="품목" />
-                <select autoComplete="off" name={`rc-m-${i}`} className="inp" value={it.match} onChange={(e) => setItem(i, 'match', e.target.value)} aria-label="반영할 식자재">
+                <input
+                  autoComplete="off"
+                  name={`rc-n-${i}`}
+                  className={'inp' + ed('name')}
+                  defaultValue={it.name}
+                  onBlur={(e) => setItem(i, 'name', e.target.value)}
+                  aria-label="품목"
+                />
+                <select
+                  autoComplete="off"
+                  name={`rc-m-${i}`}
+                  className="inp"
+                  value={it.match}
+                  onChange={(e) => setItem(i, 'match', e.target.value)}
+                  aria-label="반영할 식자재"
+                >
                   <option value="new">새 식자재</option>
                   {S.ings.map((x) => (
                     <option key={x.id} value={x.id}>
@@ -371,13 +499,40 @@ function ConfirmStep({
                 </button>
               </div>
               <div className="r2">
-                <input autoComplete="off" name={`rc-q-${i}`} className={'inp num' + ed('qty')} type="number" step="any" min="0" defaultValue={it.qty} onBlur={(e) => setItem(i, 'qty', e.target.value)} aria-label="양" />
-                <select autoComplete="off" name={`rc-u-${i}`} className={'inp' + ed('unit')} value={it.unit} onChange={(e) => setItem(i, 'unit', e.target.value)} aria-label="단위">
+                <input
+                  autoComplete="off"
+                  name={`rc-q-${i}`}
+                  className={'inp num' + ed('qty')}
+                  type="number"
+                  step="any"
+                  min="0"
+                  defaultValue={it.qty}
+                  onBlur={(e) => setItem(i, 'qty', e.target.value)}
+                  aria-label="양"
+                />
+                <select
+                  autoComplete="off"
+                  name={`rc-u-${i}`}
+                  className={'inp' + ed('unit')}
+                  value={it.unit}
+                  onChange={(e) => setItem(i, 'unit', e.target.value)}
+                  aria-label="단위"
+                >
                   {UNITS.map((u) => (
                     <option key={u}>{u}</option>
                   ))}
                 </select>
-                <input autoComplete="off" name={`rc-a-${i}`} className={'inp num' + ed('amount')} type="number" step="10" min="0" defaultValue={it.amount} onBlur={(e) => setItem(i, 'amount', e.target.value)} aria-label="금액(원)" />
+                <input
+                  autoComplete="off"
+                  name={`rc-a-${i}`}
+                  className={'inp num' + ed('amount')}
+                  type="number"
+                  step="10"
+                  min="0"
+                  defaultValue={it.amount}
+                  onBlur={(e) => setItem(i, 'amount', e.target.value)}
+                  aria-label="금액(원)"
+                />
               </div>
               <div className="hint num" style={{ margin: 0 }}>
                 {info}
@@ -518,7 +673,9 @@ function ReviewStep({ plan: P, meta }: { plan: Plan; meta: { date: string; store
                 )
               })}
             </ul>
-            {P.menus.some((x) => x.a / x.m.price >= 0.4 && x.b / x.m.price < 0.4) && <p className="hint warn-t">원가율이 40%를 넘는 메뉴가 생겨요.</p>}
+            {P.menus.some((x) => x.a / x.m.price >= 0.4 && x.b / x.m.price < 0.4) && (
+              <p className="hint warn-t">원가율이 40%를 넘는 메뉴가 생겨요.</p>
+            )}
           </>
         ) : (
           <p className="hint">바뀌는 메뉴가 없어요.</p>

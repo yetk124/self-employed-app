@@ -56,7 +56,7 @@ export default function Home() {
           <img className="h-logo" src="/img/logo.png" width="455" height="102" alt="domain" translate="no" />
           {!S.user && (
             <button className="h-pill" onClick={() => openAuth()}>
-              예시 데이터 · 내 가게로 시작
+              로그인하고 기록 저장
             </button>
           )}
         </span>
@@ -64,7 +64,11 @@ export default function Home() {
           <button className="iconbtn bell" onClick={() => go('/metrics')} aria-label="지표 보기" title="지표 보기">
             <Icon name="chart" />
           </button>
-          <button className="iconbtn bell" onClick={() => open({ kind: 'bell' })} aria-label={'알림' + (al.length ? ' ' + al.length + '개' : '')}>
+          <button
+            className="iconbtn bell"
+            onClick={() => open({ kind: 'bell' })}
+            aria-label={'알림' + (al.length ? ' ' + al.length + '개' : '')}
+          >
             <Icon name="bell" />
             {al.length > 0 && <span className="bd" />}
           </button>

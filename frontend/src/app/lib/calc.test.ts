@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { seed } from './demo'
+import { seed } from './seed'
 import { dayStats, pushHist, syncIng } from './calc'
 import { parseReceipt, rcPlan, SAMPLE_RECEIPT, toItems } from './receipt'
 
 describe('가격 이력', () => {
   it('오늘 단가가 바뀌어도 지난 날 이익은 그대로', () => {
-    const S = seed('hansik', false)
+    const S = seed('hansik')
     const past = '2026-01-05'
     S.sales[past] = { kjj: { hall: 10 } }
     const before = dayStats(S, past).profit
@@ -26,7 +26,7 @@ describe('영수증', () => {
     expect(p.items[0]).toMatchObject({ name: '양파', qty: 3000, unit: 'g', amount: 6900 })
   })
   it('기존 식자재에 매칭되고 단가가 바뀜', () => {
-    const S = seed('hansik', false)
+    const S = seed('hansik')
     const items = toItems(S, parseReceipt(SAMPLE_RECEIPT))
     expect(items.find((i) => i.name === '양파')!.match).toBe('onion')
     const P = rcPlan(S, items, '2026-10-20')

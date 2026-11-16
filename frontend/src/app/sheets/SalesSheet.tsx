@@ -23,7 +23,6 @@ export default function SalesSheet() {
       const dd = (s.sales[sel] ??= {}),
         mm = (dd[mid] ??= {})
       mm[ch] = Math.max(0, (mm[ch] || 0) + n)
-      s.sample = false
     })
   const setAdj = (k: 'disc' | 'ref', v: string) =>
     store.update((s) => {
@@ -39,7 +38,14 @@ export default function SalesSheet() {
         <>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div className="label">{sel === todayKey() ? '오늘' : '이날'} 이익</div>
-            <div className="num" style={{ fontSize: 'var(--hwp-font-headline-5)', fontWeight: 700, color: st.profit < 0 ? 'var(--hwp-color-brand)' : 'var(--hwp-color-foreground)' }}>
+            <div
+              className="num"
+              style={{
+                fontSize: 'var(--hwp-font-headline-5)',
+                fontWeight: 700,
+                color: st.profit < 0 ? 'var(--hwp-color-brand)' : 'var(--hwp-color-foreground)',
+              }}
+            >
               {won(st.profit)}
             </div>
           </div>
@@ -50,7 +56,12 @@ export default function SalesSheet() {
       }
     >
       <div className="sl-ch">
-        <div className="seg2" role="tablist" aria-label="판매 채널" style={{ gridTemplateColumns: `repeat(${S.channels.length},1fr)` }}>
+        <div
+          className="seg2"
+          role="tablist"
+          aria-label="판매 채널"
+          style={{ gridTemplateColumns: `repeat(${S.channels.length},1fr)` }}
+        >
           {S.channels.map((c) => {
             const n = Object.values(day).reduce((a, x) => a + (+x[c.id] || 0), 0)
             return (
@@ -95,11 +106,33 @@ export default function SalesSheet() {
         <div className="grid2">
           <label className="field">
             <span>할인 금액 (원)</span>
-            <input autoComplete="off" name="adj-disc" className="inp num" type="number" min="0" step="100" inputMode="numeric" value={adj.disc || ''} placeholder="0" onChange={(e) => setAdj('disc', e.target.value)} />
+            <input
+              autoComplete="off"
+              name="adj-disc"
+              className="inp num"
+              type="number"
+              min="0"
+              step="100"
+              inputMode="numeric"
+              value={adj.disc || ''}
+              placeholder="0"
+              onChange={(e) => setAdj('disc', e.target.value)}
+            />
           </label>
           <label className="field">
             <span>환불 금액 (원)</span>
-            <input autoComplete="off" name="adj-ref" className="inp num" type="number" min="0" step="100" inputMode="numeric" value={adj.ref || ''} placeholder="0" onChange={(e) => setAdj('ref', e.target.value)} />
+            <input
+              autoComplete="off"
+              name="adj-ref"
+              className="inp num"
+              type="number"
+              min="0"
+              step="100"
+              inputMode="numeric"
+              value={adj.ref || ''}
+              placeholder="0"
+              onChange={(e) => setAdj('ref', e.target.value)}
+            />
           </label>
         </div>
       </div>

@@ -1,0 +1,82 @@
+[
+ {
+  "name": "양파(국내산) 3kg망",
+  "expected": "양파"
+ },
+ {
+  "name": "깐마늘 500g",
+  "expected": null
+ },
+ {
+  "name": "돈육 앞다리 2kg",
+  "expected": "돼지고기 앞다리"
+ },
+ {
+  "name": "대파 1단",
+  "expected": "대파"
+ },
+ {
+  "name": "찌개두부",
+  "expected": "두부"
+ },
+ {
+  "name": "특란 30구",
+  "expected": "계란"
+ },
+ {
+  "name": "배추김치 10kg",
+  "expected": "김치"
+ },
+ {
+  "name": "청양고춧가루",
+  "expected": "고춧가루"
+ },
+ {
+  "name": "재래된장",
+  "expected": "된장"
+ },
+ {
+  "name": "쥬키니 호박",
+  "expected": "애호박"
+ },
+ {
+  "name": "백미 20kg",
+  "expected": "쌀"
+ },
+ {
+  "name": "적양파",
+  "expected": "양파"
+ },
+ {
+  "name": "달걀",
+  "expected": "계란"
+ },
+ {
+  "name": "앞다리살",
+  "expected": "돼지고기 앞다리"
+ },
+ {
+  "name": "손질대파",
+  "expected": "대파"
+ },
+ {
+  "name": "포기김치",
+  "expected": "김치"
+ },
+ {
+  "name": "부침두부 2모",
+  "expected": "두부"
+ },
+ {
+  "name": "햅쌀",
+  "expected": "쌀"
+ },
+ {
+  "name": "시골된장 1kg",
+  "expected": "된장"
+ },
+ {
+  "name": "고추가루 1kg",
+  "expected": "고춧가루"
+ }
+]

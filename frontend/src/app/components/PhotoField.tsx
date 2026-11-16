@@ -1,11 +1,19 @@
 import { toast } from '@/shared/toast'
-import { SAMPLE_IMG } from '../data/templates'
 import { readPhoto } from '../lib/image'
 import Icon from './Icon'
 
-/** 메뉴·식자재 사진 고르기. 서버가 생기면 Supabase Storage 에 올리고 주소(image_url)만 저장 */
-export default function PhotoField({ kind, id, img, onChange }: { kind: 'menu' | 'ing'; id: string; img?: string; onChange: (u: string | undefined) => void }) {
-  const src = img || (kind === 'menu' ? SAMPLE_IMG[id] : undefined)
+/** 메뉴·식자재 사진 고르기. (다음 단계: Supabase Storage 에 올리고 주소(image_url)만 저장) */
+export default function PhotoField({
+  kind,
+  img,
+  onChange,
+}: {
+  kind: 'menu' | 'ing'
+  id: string
+  img?: string
+  onChange: (u: string | undefined) => void
+}) {
+  const src = img
   const label = kind === 'menu' ? '메뉴' : '식자재'
   return (
     <div className="photo">
@@ -26,7 +34,12 @@ export default function PhotoField({ kind, id, img, onChange }: { kind: 'menu' |
             {src ? '사진 바꾸기' : '사진 추가'}
           </label>
           {img && (
-            <button className="link" type="button" onClick={() => onChange(undefined)} style={{ color: 'var(--hwp-color-text-muted)' }}>
+            <button
+              className="link"
+              type="button"
+              onClick={() => onChange(undefined)}
+              style={{ color: 'var(--hwp-color-text-muted)' }}
+            >
               지우기
             </button>
           )}

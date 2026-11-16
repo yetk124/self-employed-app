@@ -1,6 +1,6 @@
 /**
  * 앱 데이터 모양.
- * 지금은 기기(localStorage)에 저장하고, 백엔드가 생기면 types/api.ts 의 모양으로 서버와 주고받아요.
+ * 기기(localStorage)에 저장하고, 로그인하면 api/sync.ts 가 types/api.ts 모양으로 서버와 주고받아요.
  */
 
 export type Unit = 'g' | 'ml' | '개' | '장' | '모' | '봉' | '팩' | '단' | '병' | '마리'
@@ -136,17 +136,8 @@ export interface User {
   since?: string
 }
 
-/** 그래프 확인용 임시 데이터가 들어간 위치 (설정에서 한 번에 지움) */
-export interface DemoMarks {
-  days: string[]
-  fixed: string[]
-  receipts: string[]
-}
-
 export interface AppState {
   v: 2
-  /** 예시 데이터로 보는 중인지 */
-  sample: boolean
   tpl: BizKey
   settings: Settings
   channels: Channel[]
@@ -160,9 +151,4 @@ export interface AppState {
   user?: User | null
   onboarded?: boolean
   ocrGuideSeen?: boolean
-  demo?: DemoMarks
-  demoOff?: boolean
-  /** 예시·임시 데이터를 오늘 채웠는지 */
-  filledOn?: string
-  demoOn?: string
 }

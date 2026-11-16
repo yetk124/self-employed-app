@@ -25,10 +25,11 @@ src/app/
 ├─ app.css                 프로토타입 스타일 그대로
 ├─ api/
 │  ├─ client.ts            서버 공통 fetch (토큰 + X-Store-Id 자동)
+│  ├─ sync.ts              기기 저장소 ↔ 서버 동기화 (내려받기·바뀐 것만 올리기)
 │  └─ endpoints.ts         API 명세서 v0.1 함수 모음
 ├─ auth/                   Supabase 로그인 (키 없으면 체험 모드)
 ├─ state/
-│  ├─ store.ts             앱 데이터 (지금은 localStorage)
+│  ├─ store.ts             앱 데이터 (기기 저장소, 서버와 동기화)
 │  ├─ ui.ts                화면 상태 타입 · useUi()
 │  └─ UiProvider.tsx       시트 열기, 로그인 유도(gate), 이동
 ├─ pages/                  주소 하나 = 파일 하나
@@ -38,7 +39,7 @@ src/app/
 │  ├─ calc.ts              원가·마진·지표 계산 (가격 이력 포함)
 │  ├─ insights.ts          인사이트·알림·거래 내역
 │  ├─ receipt.ts           영수증 읽기·매칭·저장 전 확인
-│  ├─ demo.ts              예시·임시 데이터
+│  ├─ seed.ts              업종 템플릿으로 새 가게 만들기
 │  └─ date.ts · format.ts · chart.ts · image.ts · pwa.ts
 ├─ data/                   업종 템플릿, 약관
 └─ types/
@@ -49,7 +50,15 @@ src/app/
 ## 데이터 흐름
 
 - 화면은 `useStore()` 로 읽고 `store.update(s => …)` 로 고쳐요. 바꾸면 자동 저장·다시 그림.
-- 서버가 생기면 `api/endpoints.ts` 의 함수로 하나씩 바꿔 끼워요. 영수증 `parse`·`confirm` 은 `VITE_API_BASE` 가 있으면 이미 서버를 불러요.
+- 처음 여는 사람은 빈 가게예요 (예시 데이터 없음). 로그인 화면 → 온보딩(업종 템플릿) → 홈.
+- 로그인하면 `api/sync.ts` 가 서버 가게를 연결해요.
+  - 서버에 가게가 있으면 `GET /api/state` 로 통째로 내려받아 기기 저장소를 바꿔요.
+  - 없으면 기기에서 쓰던 가게를 `POST /api/import` 로 옮기거나, 온보딩이 끝날 때 만들어요.
+  - 그다음부터 `store.update` 로 바뀐 것을 0.7초 모았다가 마지막으로 맞춘 상태(`domain.syncBase`)와 비교해서
+    바뀐 것만 `POST/PUT/DELETE` 로 올려요. 실패하면 15초 뒤 다시 시도 (기기에는 이미 저장돼 있음).
+  - 기기 id ↔ 서버 id 는 `domain.idmap` 에 적어 둬요. 서버에서 받은 건 `g12`(식자재) · `m3`(메뉴) · `f7`(고정비), 홀·포장 채널은 `hall`·`takeout`.
+  - 영수증 저장은 서버가 처리하고(`/receipts/confirm`) 바로 다시 내려받아요.
+- 로그인 안 한 사람은 기기에만 저장해요.
 - 가격 이력: 식자재 단가·메뉴 판매가·레시피를 날짜별(`hist`)로 기록하고, 장부·지표는 그 날짜 값으로 계산해요 (`lib/calc.ts`).
 
 ## 환경변수 (`frontend/.env`)

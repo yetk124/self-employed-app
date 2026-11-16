@@ -47,7 +47,6 @@ export default function IngSheet({ id }: { id?: string }) {
       const i = s.ings.findIndex((x) => x.id === g.id)
       if (i >= 0) s.ings[i] = g
       else s.ings.push(g)
-      s.sample = false
     })
     close()
     const after = store.get(),
@@ -75,7 +74,8 @@ export default function IngSheet({ id }: { id?: string }) {
               className="btn danger"
               armed="한 번 더 누르면 삭제"
               onConfirm={() => {
-                if (S.menus.some((m) => m.items.some((i) => i.ing === d.id))) return toast('메뉴 레시피에서 먼저 빼 주세요.')
+                if (S.menus.some((m) => m.items.some((i) => i.ing === d.id)))
+                  return toast('메뉴 레시피에서 먼저 빼 주세요.')
                 store.update((s) => {
                   s.ings = s.ings.filter((x) => x.id !== d.id)
                 })
@@ -95,21 +95,54 @@ export default function IngSheet({ id }: { id?: string }) {
       <PhotoField kind="ing" id={d.id} img={d.img} onChange={(img) => setD({ ...d, img })} />
       <label className="field">
         <span>이름</span>
-        <input autoComplete="off" name="g-name" className="inp" value={d.name} placeholder="예: 돼지고기 앞다리…" onChange={(e) => setD({ ...d, name: e.target.value })} />
+        <input
+          autoComplete="off"
+          name="g-name"
+          className="inp"
+          value={d.name}
+          placeholder="예: 돼지고기 앞다리…"
+          onChange={(e) => setD({ ...d, name: e.target.value })}
+        />
       </label>
       <div className="grid2">
         <label className="field">
           <span>산 가격 (원)</span>
-          <input autoComplete="off" name="g-price" className="inp num" type="number" min="0" step="100" value={d.buyPrice} placeholder="예: 13000…" onChange={(e) => setD({ ...d, buyPrice: e.target.value })} />
+          <input
+            autoComplete="off"
+            name="g-price"
+            className="inp num"
+            type="number"
+            min="0"
+            step="100"
+            value={d.buyPrice}
+            placeholder="예: 13000…"
+            onChange={(e) => setD({ ...d, buyPrice: e.target.value })}
+          />
         </label>
         <label className="field">
           <span>산 양</span>
-          <input autoComplete="off" name="g-qty" className="inp num" type="number" min="0" step="any" value={d.buyQty} placeholder="예: 1000…" onChange={(e) => setD({ ...d, buyQty: e.target.value })} />
+          <input
+            autoComplete="off"
+            name="g-qty"
+            className="inp num"
+            type="number"
+            min="0"
+            step="any"
+            value={d.buyQty}
+            placeholder="예: 1000…"
+            onChange={(e) => setD({ ...d, buyQty: e.target.value })}
+          />
         </label>
       </div>
       <label className="field">
         <span>단위</span>
-        <select autoComplete="off" name="g-unit" className="inp" value={d.unit} onChange={(e) => setD({ ...d, unit: e.target.value as Unit })}>
+        <select
+          autoComplete="off"
+          name="g-unit"
+          className="inp"
+          value={d.unit}
+          onChange={(e) => setD({ ...d, unit: e.target.value as Unit })}
+        >
           {UNITS.map((u) => (
             <option key={u}>{u}</option>
           ))}

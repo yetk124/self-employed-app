@@ -132,7 +132,7 @@ export interface ReceiptConfirmReq {
     unit: string
     amount: number
     action: 'update' | 'new' | 'skip'
-    ingredient_id: string | null
+    ingredient_id: number | string | null
   }[]
 }
 export interface ReceiptConfirmRes {
@@ -150,4 +150,44 @@ export interface SummaryDto {
   facts: Record<string, unknown>
   source: 'llm' | 'rule'
   cached: boolean
+}
+
+/** GET /api/state : 가게 하나의 화면 데이터 전체 (로그인 직후·새로고침 때) */
+export interface StateDto {
+  store_id: number
+  settings: SettingsDto & { store_id: number; biz_type: string; biz_sub?: string | null }
+  channels: { id: number; name: string; fee_rate: number; fixed_fee: number }[]
+  ingredients: {
+    id: number
+    name: string
+    unit: string
+    buy_price: number
+    buy_qty: number
+    image_url: string | null
+    history: { from: string; buy_price: number; buy_qty: number }[]
+  }[]
+  menus: {
+    id: number
+    name: string
+    price: number
+    image_url: string | null
+    recipe: { ingredient_id: number; qty: number }[]
+    history: { from: string; price: number; recipe: { ingredient_id: number; qty: number }[] }[]
+  }[]
+  /** sales[날짜][메뉴 id][채널 id] = 개수 */
+  sales: Record<string, Record<string, Record<string, number>>>
+  adjustments: { date: string; discount: number; refund: number }[]
+  off_days: { date: string; status: string }[]
+  fixed_costs: { id: number; name: string; amount: number; paid_on: string }[]
+  receipts: {
+    id: number
+    purchased_at: string
+    vendor: string
+    total: number
+    count: number
+    fields_total: number
+    fields_edited: number
+    ocr_source: string
+    items?: { name: string; qty: number; unit: string; amount: number }[]
+  }[]
 }

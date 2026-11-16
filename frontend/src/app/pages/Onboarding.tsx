@@ -5,13 +5,14 @@ import { toast } from '@/shared/toast'
 import { BizGrid, Toggle } from '../components/bits'
 import Icon from '../components/Icon'
 import { BIZ } from '../data/templates'
-import { seed } from '../lib/demo'
+import { importLocal, syncOn } from '../api/sync'
+import { seed } from '../lib/seed'
 import { askNotify } from '../lib/pwa'
 import { store, useStore } from '../state/store'
 import { useUi } from '../state/ui'
 import type { BizKey } from '../types'
 
-/** 첫 설정 3단계: 업종 → 가게 이름 → 영업 시간·알림. 끝나면 POST /api/stores */
+/** 첫 설정 3단계: 업종 → 가게 이름 → 영업 시간·알림. 로그인 상태면 끝날 때 서버에 가게를 만들어요 (POST /api/import) */
 export default function Onboarding() {
   const S = useStore()
   const nav = useNavigate()
@@ -19,27 +20,32 @@ export default function Onboarding() {
   const [step, setStep] = useState(1)
   const [biz, setBiz] = useState<BizKey | 'blank' | ''>('')
   const [sub, setSub] = useState('')
-  const [name, setName] = useState(S.sample ? '' : S.settings.store)
+  const fresh = !S.onboarded
+  const [name, setName] = useState(fresh ? '' : S.settings.store)
+  const [busy, setBusy] = useState(false)
   const [open, setOpen] = useState('11:00')
   const [close, setClose] = useState(S.settings.close || '21:30')
   const [notify, setNotify] = useState(true)
 
-  const finish = (skip: boolean) => {
+  const finish = async (skip: boolean) => {
+    if (busy) return
     const cur = store.get()
     let next = structuredClone(cur)
-    if (cur.sample && biz && biz !== 'blank') next = seed(biz, false)
-    else if (cur.sample && biz === 'blank') {
-      next = seed('hansik', false)
+    // 처음 시작: 고른 업종 템플릿(메뉴·식자재)으로 새 가게. 이미 쓰던 가게면 데이터는 그대로
+    if (!cur.onboarded && biz && biz !== 'blank') next = seed(biz)
+    else if (!cur.onboarded && (biz === 'blank' || (!cur.menus.length && !cur.ings.length))) {
+      next = seed('hansik')
       next.menus = []
       next.ings = []
       next.tpl = 'etc'
     }
     next.user = cur.user
+    next.ocrGuideSeen = cur.ocrGuideSeen
     if (biz && biz !== 'blank') {
       next.tpl = biz
       next.settings.bizSub = sub
     }
-    if (name.trim()) next.settings.store = name.trim()
+    next.settings.store = name.trim() || next.settings.store || '내 가게'
     next.settings.open = open
     next.settings.close = close
     if (!skip && notify) {
@@ -47,19 +53,31 @@ export default function Onboarding() {
       void askNotify()
     }
     next.onboarded = true
-    next.sample = false
     store.replace(next)
     track('onboard_done', { biz: biz || 'skip' })
+    // 로그인한 사장님이면 서버에 가게 만들기 (이미 연결돼 있으면 바뀐 것만 올라가요)
+    if (next.user && !syncOn()) {
+      setBusy(true)
+      try {
+        await importLocal()
+      } catch {
+        toast('서버에 가게를 만들지 못했어요. 이 기기에 먼저 저장하고, 다음에 열 때 다시 시도할게요.')
+      } finally {
+        setBusy(false)
+      }
+    }
     nav(biz === 'blank' ? '/manage?tab=ing' : '/')
     scrollTo(0, 0)
-    toast(biz === 'blank' ? '식자재부터 등록해 볼까요? 오른쪽 위 + 를 누르세요.' : '준비 끝! 오늘 판매를 입력해 보세요.')
+    toast(
+      biz === 'blank' ? '식자재부터 등록해 볼까요? 오른쪽 위 + 를 누르세요.' : '준비 끝! 오늘 판매를 입력해 보세요.',
+    )
     skipGate()
   }
 
   const next = () => {
     if (step === 1 && !biz) return toast('업종을 골라 주세요.')
     if (step < 3) return setStep(step + 1)
-    finish(false)
+    void finish(false)
   }
 
   const b = BIZ.find((x) => x[0] === biz)
@@ -74,7 +92,7 @@ export default function Onboarding() {
           <span style={{ width: 40 }} />
         )}
         <span className="label num">{step} / 3</span>
-        <button className="link" onClick={() => finish(true)} style={{ paddingInline: 8 }}>
+        <button className="link" onClick={() => void finish(true)} style={{ paddingInline: 8 }}>
           건너뛰기
         </button>
       </header>
@@ -102,7 +120,12 @@ export default function Onboarding() {
                 </span>
                 <div className="row">
                   {b[2].map((n) => (
-                    <button key={n} className="chip" aria-pressed={sub === n} onClick={() => setSub(sub === n ? '' : n)}>
+                    <button
+                      key={n}
+                      className="chip"
+                      aria-pressed={sub === n}
+                      onClick={() => setSub(sub === n ? '' : n)}
+                    >
                       {n}
                     </button>
                   ))}
@@ -118,7 +141,7 @@ export default function Onboarding() {
             >
               템플릿 없이 빈 가게로 시작할게요
             </button>
-            {!S.sample && (
+            {!fresh && (
               <p className="hint" style={{ marginTop: 12 }}>
                 이미 입력한 메뉴와 식자재는 그대로 둘게요.
               </p>
@@ -131,7 +154,16 @@ export default function Onboarding() {
             <p className="sub">장부와 알림에 표시돼요.</p>
             <label className="field">
               <span>가게 이름</span>
-              <input autoFocus autoComplete="off" name="ob-store" className="inp" maxLength={20} value={name} placeholder="예: 월곡 김치찌개…" onChange={(e) => setName(e.target.value)} />
+              <input
+                autoFocus
+                autoComplete="off"
+                name="ob-store"
+                className="inp"
+                maxLength={20}
+                value={name}
+                placeholder="예: 월곡 김치찌개…"
+                onChange={(e) => setName(e.target.value)}
+              />
             </label>
           </>
         )}
@@ -142,11 +174,25 @@ export default function Onboarding() {
             <div className="grid2">
               <label className="field">
                 <span>영업 시작 시각</span>
-                <input autoComplete="off" name="ob-open" className="inp num" type="time" value={open} onChange={(e) => setOpen(e.target.value)} />
+                <input
+                  autoComplete="off"
+                  name="ob-open"
+                  className="inp num"
+                  type="time"
+                  value={open}
+                  onChange={(e) => setOpen(e.target.value)}
+                />
               </label>
               <label className="field">
                 <span>영업 종료 시각</span>
-                <input autoComplete="off" name="ob-close" className="inp num" type="time" value={close} onChange={(e) => setClose(e.target.value)} />
+                <input
+                  autoComplete="off"
+                  name="ob-close"
+                  className="inp num"
+                  type="time"
+                  value={close}
+                  onChange={(e) => setClose(e.target.value)}
+                />
               </label>
             </div>
             <div className="row between" style={{ marginTop: 16 }}>
@@ -155,11 +201,10 @@ export default function Onboarding() {
             </div>
           </>
         )}
-        <button className="btn primary block" style={{ marginTop: 28 }} onClick={next}>
-          {step < 3 ? '다음' : '시작하기'}
+        <button className="btn primary block" style={{ marginTop: 28 }} onClick={next} disabled={busy}>
+          {step < 3 ? '다음' : busy ? '가게 만드는 중…' : '시작하기'}
         </button>
       </div>
     </>
   )
 }
-

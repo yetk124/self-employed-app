@@ -14,7 +14,12 @@ export default function FixedSheet({ id }: { id?: string }) {
   const S = useStore()
   const { close } = useUi()
   const f0 = S.fixed.find((x) => x.id === id)
-  const [d, setD] = useState(() => ({ id: f0?.id ?? uid(), name: f0?.name ?? '', amount: f0 ? String(f0.amount) : '', date: f0?.date ?? todayKey() }))
+  const [d, setD] = useState(() => ({
+    id: f0?.id ?? uid(),
+    name: f0?.name ?? '',
+    amount: f0 ? String(f0.amount) : '',
+    date: f0?.date ?? todayKey(),
+  }))
   const amtRef = useRef<HTMLInputElement>(null)
 
   const save = () => {
@@ -25,7 +30,6 @@ export default function FixedSheet({ id }: { id?: string }) {
       const i = s.fixed.findIndex((f) => f.id === d.id)
       if (i >= 0) s.fixed[i] = x
       else s.fixed.push(x)
-      s.sample = false
     })
     track('fixed_save')
     close()
@@ -81,7 +85,14 @@ export default function FixedSheet({ id }: { id?: string }) {
       </div>
       <label className="field">
         <span>항목 이름</span>
-        <input autoComplete="off" name="fx-name" className="inp" value={d.name} placeholder="예: 월세…" onChange={(e) => setD({ ...d, name: e.target.value })} />
+        <input
+          autoComplete="off"
+          name="fx-name"
+          className="inp"
+          value={d.name}
+          placeholder="예: 월세…"
+          onChange={(e) => setD({ ...d, name: e.target.value })}
+        />
       </label>
       <div className="grid2">
         <label className="field">
@@ -102,7 +113,14 @@ export default function FixedSheet({ id }: { id?: string }) {
         </label>
         <label className="field">
           <span>낸 날짜</span>
-          <input autoComplete="off" name="fx-date" className="inp num" type="date" value={d.date} onChange={(e) => setD({ ...d, date: e.target.value })} />
+          <input
+            autoComplete="off"
+            name="fx-date"
+            className="inp num"
+            type="date"
+            value={d.date}
+            onChange={(e) => setD({ ...d, date: e.target.value })}
+          />
         </label>
       </div>
     </Sheet>

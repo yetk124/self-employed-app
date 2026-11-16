@@ -1,0 +1,1901 @@
+{
+ "biz": [
+  {
+   "key": "hansik",
+   "label": "한식",
+   "subs": [
+    "한식당",
+    "고깃집",
+    "국밥집"
+   ]
+  },
+  {
+   "key": "junsik",
+   "label": "중식",
+   "subs": [
+    "중국집",
+    "마라탕"
+   ]
+  },
+  {
+   "key": "ilsik",
+   "label": "일식",
+   "subs": [
+    "초밥",
+    "라멘",
+    "돈카츠"
+   ]
+  },
+  {
+   "key": "yangsik",
+   "label": "양식",
+   "subs": [
+    "파스타",
+    "피자",
+    "스테이크"
+   ]
+  },
+  {
+   "key": "bunsik",
+   "label": "분식",
+   "subs": [
+    "떡볶이",
+    "김밥"
+   ]
+  },
+  {
+   "key": "cafe",
+   "label": "카페·디저트",
+   "subs": [
+    "카페",
+    "베이커리"
+   ]
+  },
+  {
+   "key": "fastfood",
+   "label": "패스트푸드",
+   "subs": [
+    "햄버거",
+    "치킨"
+   ]
+  },
+  {
+   "key": "pub",
+   "label": "주점",
+   "subs": [
+    "호프",
+    "포차",
+    "이자카야"
+   ]
+  },
+  {
+   "key": "asian",
+   "label": "아시아 음식",
+   "subs": [
+    "쌀국수",
+    "태국 음식"
+   ]
+  },
+  {
+   "key": "salad",
+   "label": "샐러드",
+   "subs": [
+    "샐러드",
+    "포케"
+   ]
+  },
+  {
+   "key": "dosirak",
+   "label": "도시락",
+   "subs": [
+    "도시락",
+    "반찬"
+   ]
+  },
+  {
+   "key": "etc",
+   "label": "기타",
+   "subs": [
+    "뷔페",
+    "푸드트럭"
+   ]
+  }
+ ],
+ "channels": [
+  {
+   "name": "홀",
+   "fee_rate": 0,
+   "fixed_fee": 0
+  },
+  {
+   "name": "포장",
+   "fee_rate": 0,
+   "fixed_fee": 300
+  }
+ ],
+ "templates": {
+  "hansik": {
+   "label": "한식",
+   "store": "예시 한식당",
+   "ingredients": [
+    {
+     "key": "rice",
+     "name": "쌀",
+     "unit": "g",
+     "buy_price": 52000,
+     "buy_qty": 20000
+    },
+    {
+     "key": "pork",
+     "name": "돼지고기 앞다리",
+     "unit": "g",
+     "buy_price": 13000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "kimchi",
+     "name": "김치",
+     "unit": "g",
+     "buy_price": 30000,
+     "buy_qty": 10000
+    },
+    {
+     "key": "tofu",
+     "name": "두부",
+     "unit": "모",
+     "buy_price": 1500,
+     "buy_qty": 1
+    },
+    {
+     "key": "onion",
+     "name": "양파",
+     "unit": "g",
+     "buy_price": 4500,
+     "buy_qty": 3000
+    },
+    {
+     "key": "scallion",
+     "name": "대파",
+     "unit": "g",
+     "buy_price": 3000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "chili",
+     "name": "고춧가루",
+     "unit": "g",
+     "buy_price": 25000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "egg",
+     "name": "계란",
+     "unit": "개",
+     "buy_price": 7500,
+     "buy_qty": 30
+    },
+    {
+     "key": "doenjang",
+     "name": "된장",
+     "unit": "g",
+     "buy_price": 9000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "zucchini",
+     "name": "애호박",
+     "unit": "개",
+     "buy_price": 1500,
+     "buy_qty": 1
+    }
+   ],
+   "menus": [
+    {
+     "key": "kjj",
+     "name": "김치찌개",
+     "price": 9000,
+     "recipe": [
+      {
+       "ingredient": "kimchi",
+       "qty": 200
+      },
+      {
+       "ingredient": "pork",
+       "qty": 100
+      },
+      {
+       "ingredient": "tofu",
+       "qty": 0.5
+      },
+      {
+       "ingredient": "scallion",
+       "qty": 20
+      },
+      {
+       "ingredient": "rice",
+       "qty": 200
+      }
+     ]
+    },
+    {
+     "key": "jeyuk",
+     "name": "제육볶음",
+     "price": 11000,
+     "recipe": [
+      {
+       "ingredient": "pork",
+       "qty": 200
+      },
+      {
+       "ingredient": "onion",
+       "qty": 100
+      },
+      {
+       "ingredient": "chili",
+       "qty": 15
+      },
+      {
+       "ingredient": "scallion",
+       "qty": 30
+      },
+      {
+       "ingredient": "rice",
+       "qty": 200
+      }
+     ]
+    },
+    {
+     "key": "djj",
+     "name": "된장찌개",
+     "price": 8000,
+     "recipe": [
+      {
+       "ingredient": "tofu",
+       "qty": 1
+      },
+      {
+       "ingredient": "doenjang",
+       "qty": 40
+      },
+      {
+       "ingredient": "zucchini",
+       "qty": 0.5
+      },
+      {
+       "ingredient": "onion",
+       "qty": 50
+      },
+      {
+       "ingredient": "scallion",
+       "qty": 20
+      },
+      {
+       "ingredient": "rice",
+       "qty": 200
+      }
+     ]
+    },
+    {
+     "key": "egg",
+     "name": "계란말이",
+     "price": 7000,
+     "recipe": [
+      {
+       "ingredient": "egg",
+       "qty": 4
+      },
+      {
+       "ingredient": "scallion",
+       "qty": 20
+      },
+      {
+       "ingredient": "onion",
+       "qty": 30
+      }
+     ]
+    }
+   ]
+  },
+  "cafe": {
+   "label": "카페·디저트",
+   "store": "예시 카페",
+   "ingredients": [
+    {
+     "key": "bean",
+     "name": "원두",
+     "unit": "g",
+     "buy_price": 28000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "milk",
+     "name": "우유",
+     "unit": "ml",
+     "buy_price": 2800,
+     "buy_qty": 1000
+    },
+    {
+     "key": "cup",
+     "name": "컵·뚜껑",
+     "unit": "개",
+     "buy_price": 120,
+     "buy_qty": 1
+    },
+    {
+     "key": "syrup",
+     "name": "바닐라 시럽",
+     "unit": "ml",
+     "buy_price": 12000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "ice",
+     "name": "얼음",
+     "unit": "g",
+     "buy_price": 3000,
+     "buy_qty": 3000
+    }
+   ],
+   "menus": [
+    {
+     "key": "ame",
+     "name": "아메리카노",
+     "price": 4000,
+     "recipe": [
+      {
+       "ingredient": "bean",
+       "qty": 20
+      },
+      {
+       "ingredient": "cup",
+       "qty": 1
+      },
+      {
+       "ingredient": "ice",
+       "qty": 150
+      }
+     ]
+    },
+    {
+     "key": "latte",
+     "name": "카페라떼",
+     "price": 4800,
+     "recipe": [
+      {
+       "ingredient": "bean",
+       "qty": 20
+      },
+      {
+       "ingredient": "milk",
+       "qty": 200
+      },
+      {
+       "ingredient": "cup",
+       "qty": 1
+      },
+      {
+       "ingredient": "ice",
+       "qty": 150
+      }
+     ]
+    },
+    {
+     "key": "vanilla",
+     "name": "바닐라라떼",
+     "price": 5300,
+     "recipe": [
+      {
+       "ingredient": "bean",
+       "qty": 20
+      },
+      {
+       "ingredient": "milk",
+       "qty": 200
+      },
+      {
+       "ingredient": "syrup",
+       "qty": 20
+      },
+      {
+       "ingredient": "cup",
+       "qty": 1
+      },
+      {
+       "ingredient": "ice",
+       "qty": 150
+      }
+     ]
+    }
+   ]
+  },
+  "bunsik": {
+   "label": "분식",
+   "store": "예시 분식집",
+   "ingredients": [
+    {
+     "key": "tteok",
+     "name": "떡",
+     "unit": "g",
+     "buy_price": 5000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "fishcake",
+     "name": "어묵",
+     "unit": "g",
+     "buy_price": 8000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "gochujang",
+     "name": "고추장",
+     "unit": "g",
+     "buy_price": 10000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "laver",
+     "name": "김",
+     "unit": "장",
+     "buy_price": 6000,
+     "buy_qty": 100
+    },
+    {
+     "key": "danmuji",
+     "name": "단무지",
+     "unit": "g",
+     "buy_price": 4000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "rice",
+     "name": "쌀",
+     "unit": "g",
+     "buy_price": 52000,
+     "buy_qty": 20000
+    },
+    {
+     "key": "egg",
+     "name": "계란",
+     "unit": "개",
+     "buy_price": 7500,
+     "buy_qty": 30
+    },
+    {
+     "key": "scallion",
+     "name": "대파",
+     "unit": "g",
+     "buy_price": 3000,
+     "buy_qty": 1000
+    }
+   ],
+   "menus": [
+    {
+     "key": "tbk",
+     "name": "떡볶이",
+     "price": 5000,
+     "recipe": [
+      {
+       "ingredient": "tteok",
+       "qty": 300
+      },
+      {
+       "ingredient": "fishcake",
+       "qty": 100
+      },
+      {
+       "ingredient": "gochujang",
+       "qty": 50
+      },
+      {
+       "ingredient": "scallion",
+       "qty": 20
+      }
+     ]
+    },
+    {
+     "key": "gimbap",
+     "name": "김밥",
+     "price": 4000,
+     "recipe": [
+      {
+       "ingredient": "rice",
+       "qty": 150
+      },
+      {
+       "ingredient": "laver",
+       "qty": 1
+      },
+      {
+       "ingredient": "danmuji",
+       "qty": 20
+      },
+      {
+       "ingredient": "egg",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "key": "odeng",
+     "name": "어묵탕",
+     "price": 3000,
+     "recipe": [
+      {
+       "ingredient": "fishcake",
+       "qty": 150
+      },
+      {
+       "ingredient": "scallion",
+       "qty": 10
+      }
+     ]
+    }
+   ]
+  },
+  "junsik": {
+   "label": "중식",
+   "store": "예시 중국집",
+   "ingredients": [
+    {
+     "key": "noodle",
+     "name": "중화면",
+     "unit": "g",
+     "buy_price": 3000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "chunjang",
+     "name": "춘장",
+     "unit": "g",
+     "buy_price": 6000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "pork",
+     "name": "돼지고기",
+     "unit": "g",
+     "buy_price": 13000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "onion",
+     "name": "양파",
+     "unit": "g",
+     "buy_price": 4500,
+     "buy_qty": 3000
+    },
+    {
+     "key": "squid",
+     "name": "오징어",
+     "unit": "g",
+     "buy_price": 15000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "chili",
+     "name": "고춧가루",
+     "unit": "g",
+     "buy_price": 25000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "starch",
+     "name": "전분",
+     "unit": "g",
+     "buy_price": 3000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "oil",
+     "name": "식용유",
+     "unit": "ml",
+     "buy_price": 8000,
+     "buy_qty": 1800
+    },
+    {
+     "key": "danmuji",
+     "name": "단무지",
+     "unit": "g",
+     "buy_price": 4000,
+     "buy_qty": 1000
+    }
+   ],
+   "menus": [
+    {
+     "key": "jjm",
+     "name": "짜장면",
+     "price": 7000,
+     "recipe": [
+      {
+       "ingredient": "noodle",
+       "qty": 200
+      },
+      {
+       "ingredient": "chunjang",
+       "qty": 40
+      },
+      {
+       "ingredient": "pork",
+       "qty": 50
+      },
+      {
+       "ingredient": "onion",
+       "qty": 80
+      },
+      {
+       "ingredient": "oil",
+       "qty": 15
+      },
+      {
+       "ingredient": "danmuji",
+       "qty": 20
+      }
+     ]
+    },
+    {
+     "key": "jjb",
+     "name": "짬뽕",
+     "price": 8500,
+     "recipe": [
+      {
+       "ingredient": "noodle",
+       "qty": 200
+      },
+      {
+       "ingredient": "squid",
+       "qty": 60
+      },
+      {
+       "ingredient": "pork",
+       "qty": 40
+      },
+      {
+       "ingredient": "onion",
+       "qty": 60
+      },
+      {
+       "ingredient": "chili",
+       "qty": 10
+      },
+      {
+       "ingredient": "danmuji",
+       "qty": 20
+      }
+     ]
+    },
+    {
+     "key": "tsy",
+     "name": "탕수육",
+     "price": 18000,
+     "recipe": [
+      {
+       "ingredient": "pork",
+       "qty": 300
+      },
+      {
+       "ingredient": "starch",
+       "qty": 80
+      },
+      {
+       "ingredient": "oil",
+       "qty": 120
+      },
+      {
+       "ingredient": "onion",
+       "qty": 50
+      }
+     ]
+    }
+   ]
+  },
+  "ilsik": {
+   "label": "일식",
+   "store": "예시 일식당",
+   "ingredients": [
+    {
+     "key": "rice",
+     "name": "쌀",
+     "unit": "g",
+     "buy_price": 52000,
+     "buy_qty": 20000
+    },
+    {
+     "key": "salmon",
+     "name": "연어",
+     "unit": "g",
+     "buy_price": 45000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "wasabi",
+     "name": "와사비",
+     "unit": "g",
+     "buy_price": 12000,
+     "buy_qty": 500
+    },
+    {
+     "key": "loin",
+     "name": "돼지 등심",
+     "unit": "g",
+     "buy_price": 15000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "panko",
+     "name": "빵가루",
+     "unit": "g",
+     "buy_price": 5000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "oil",
+     "name": "식용유",
+     "unit": "ml",
+     "buy_price": 8000,
+     "buy_qty": 1800
+    },
+    {
+     "key": "egg",
+     "name": "계란",
+     "unit": "개",
+     "buy_price": 7500,
+     "buy_qty": 30
+    },
+    {
+     "key": "rnoodle",
+     "name": "라멘면",
+     "unit": "g",
+     "buy_price": 4000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "broth",
+     "name": "돈코츠 육수",
+     "unit": "ml",
+     "buy_price": 10000,
+     "buy_qty": 2000
+    }
+   ],
+   "menus": [
+    {
+     "key": "sushi",
+     "name": "연어 초밥",
+     "price": 16000,
+     "recipe": [
+      {
+       "ingredient": "rice",
+       "qty": 200
+      },
+      {
+       "ingredient": "salmon",
+       "qty": 120
+      },
+      {
+       "ingredient": "wasabi",
+       "qty": 5
+      }
+     ]
+    },
+    {
+     "key": "katsu",
+     "name": "돈카츠",
+     "price": 12000,
+     "recipe": [
+      {
+       "ingredient": "loin",
+       "qty": 180
+      },
+      {
+       "ingredient": "panko",
+       "qty": 40
+      },
+      {
+       "ingredient": "oil",
+       "qty": 80
+      },
+      {
+       "ingredient": "egg",
+       "qty": 1
+      },
+      {
+       "ingredient": "rice",
+       "qty": 200
+      }
+     ]
+    },
+    {
+     "key": "ramen",
+     "name": "돈코츠 라멘",
+     "price": 11000,
+     "recipe": [
+      {
+       "ingredient": "rnoodle",
+       "qty": 150
+      },
+      {
+       "ingredient": "broth",
+       "qty": 400
+      },
+      {
+       "ingredient": "loin",
+       "qty": 50
+      },
+      {
+       "ingredient": "egg",
+       "qty": 1
+      }
+     ]
+    }
+   ]
+  },
+  "yangsik": {
+   "label": "양식",
+   "store": "예시 양식당",
+   "ingredients": [
+    {
+     "key": "pasta",
+     "name": "파스타면",
+     "unit": "g",
+     "buy_price": 4500,
+     "buy_qty": 1000
+    },
+    {
+     "key": "tomato",
+     "name": "토마토 소스",
+     "unit": "ml",
+     "buy_price": 8000,
+     "buy_qty": 2000
+    },
+    {
+     "key": "cream",
+     "name": "생크림",
+     "unit": "ml",
+     "buy_price": 6000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "bacon",
+     "name": "베이컨",
+     "unit": "g",
+     "buy_price": 15000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "garlic",
+     "name": "마늘",
+     "unit": "g",
+     "buy_price": 5500,
+     "buy_qty": 500
+    },
+    {
+     "key": "olive",
+     "name": "올리브유",
+     "unit": "ml",
+     "buy_price": 15000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "dough",
+     "name": "피자 도우",
+     "unit": "개",
+     "buy_price": 1500,
+     "buy_qty": 1
+    },
+    {
+     "key": "mozza",
+     "name": "모짜렐라",
+     "unit": "g",
+     "buy_price": 18000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "beef",
+     "name": "소고기 채끝",
+     "unit": "g",
+     "buy_price": 60000,
+     "buy_qty": 1000
+    }
+   ],
+   "menus": [
+    {
+     "key": "tpasta",
+     "name": "토마토 파스타",
+     "price": 14000,
+     "recipe": [
+      {
+       "ingredient": "pasta",
+       "qty": 120
+      },
+      {
+       "ingredient": "tomato",
+       "qty": 150
+      },
+      {
+       "ingredient": "garlic",
+       "qty": 10
+      },
+      {
+       "ingredient": "olive",
+       "qty": 15
+      }
+     ]
+    },
+    {
+     "key": "cpasta",
+     "name": "크림 파스타",
+     "price": 15000,
+     "recipe": [
+      {
+       "ingredient": "pasta",
+       "qty": 120
+      },
+      {
+       "ingredient": "cream",
+       "qty": 150
+      },
+      {
+       "ingredient": "bacon",
+       "qty": 40
+      },
+      {
+       "ingredient": "garlic",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "key": "pizza",
+     "name": "마르게리타 피자",
+     "price": 18000,
+     "recipe": [
+      {
+       "ingredient": "dough",
+       "qty": 1
+      },
+      {
+       "ingredient": "tomato",
+       "qty": 80
+      },
+      {
+       "ingredient": "mozza",
+       "qty": 150
+      },
+      {
+       "ingredient": "olive",
+       "qty": 10
+      }
+     ]
+    },
+    {
+     "key": "steak",
+     "name": "채끝 스테이크",
+     "price": 32000,
+     "recipe": [
+      {
+       "ingredient": "beef",
+       "qty": 220
+      },
+      {
+       "ingredient": "olive",
+       "qty": 10
+      },
+      {
+       "ingredient": "garlic",
+       "qty": 10
+      }
+     ]
+    }
+   ]
+  },
+  "fastfood": {
+   "label": "패스트푸드",
+   "store": "예시 치킨·버거",
+   "ingredients": [
+    {
+     "key": "chicken",
+     "name": "생닭",
+     "unit": "마리",
+     "buy_price": 6500,
+     "buy_qty": 1
+    },
+    {
+     "key": "flour",
+     "name": "튀김가루",
+     "unit": "g",
+     "buy_price": 4000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "oil",
+     "name": "식용유",
+     "unit": "ml",
+     "buy_price": 8000,
+     "buy_qty": 1800
+    },
+    {
+     "key": "sauce",
+     "name": "양념 소스",
+     "unit": "g",
+     "buy_price": 8000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "mu",
+     "name": "치킨무",
+     "unit": "개",
+     "buy_price": 300,
+     "buy_qty": 1
+    },
+    {
+     "key": "box",
+     "name": "포장 박스",
+     "unit": "개",
+     "buy_price": 300,
+     "buy_qty": 1
+    },
+    {
+     "key": "bun",
+     "name": "버거 번",
+     "unit": "개",
+     "buy_price": 500,
+     "buy_qty": 1
+    },
+    {
+     "key": "patty",
+     "name": "소고기 패티",
+     "unit": "개",
+     "buy_price": 1200,
+     "buy_qty": 1
+    },
+    {
+     "key": "cheese",
+     "name": "슬라이스 치즈",
+     "unit": "장",
+     "buy_price": 200,
+     "buy_qty": 1
+    },
+    {
+     "key": "lettuce",
+     "name": "양상추",
+     "unit": "g",
+     "buy_price": 4000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "fries",
+     "name": "냉동 감자",
+     "unit": "g",
+     "buy_price": 6000,
+     "buy_qty": 2000
+    }
+   ],
+   "menus": [
+    {
+     "key": "fried",
+     "name": "후라이드 치킨",
+     "price": 20000,
+     "recipe": [
+      {
+       "ingredient": "chicken",
+       "qty": 1
+      },
+      {
+       "ingredient": "flour",
+       "qty": 150
+      },
+      {
+       "ingredient": "oil",
+       "qty": 300
+      },
+      {
+       "ingredient": "mu",
+       "qty": 1
+      },
+      {
+       "ingredient": "box",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "key": "yangnyeom",
+     "name": "양념치킨",
+     "price": 21000,
+     "recipe": [
+      {
+       "ingredient": "chicken",
+       "qty": 1
+      },
+      {
+       "ingredient": "flour",
+       "qty": 150
+      },
+      {
+       "ingredient": "oil",
+       "qty": 300
+      },
+      {
+       "ingredient": "sauce",
+       "qty": 80
+      },
+      {
+       "ingredient": "mu",
+       "qty": 1
+      },
+      {
+       "ingredient": "box",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "key": "burger",
+     "name": "치즈버거",
+     "price": 7500,
+     "recipe": [
+      {
+       "ingredient": "bun",
+       "qty": 1
+      },
+      {
+       "ingredient": "patty",
+       "qty": 1
+      },
+      {
+       "ingredient": "cheese",
+       "qty": 1
+      },
+      {
+       "ingredient": "lettuce",
+       "qty": 20
+      }
+     ]
+    },
+    {
+     "key": "fries",
+     "name": "감자튀김",
+     "price": 3000,
+     "recipe": [
+      {
+       "ingredient": "fries",
+       "qty": 150
+      },
+      {
+       "ingredient": "oil",
+       "qty": 50
+      }
+     ]
+    }
+   ]
+  },
+  "pub": {
+   "label": "주점",
+   "store": "예시 호프",
+   "ingredients": [
+    {
+     "key": "beer",
+     "name": "생맥주",
+     "unit": "ml",
+     "buy_price": 2800,
+     "buy_qty": 1000
+    },
+    {
+     "key": "soju",
+     "name": "소주",
+     "unit": "병",
+     "buy_price": 1600,
+     "buy_qty": 1
+    },
+    {
+     "key": "wing",
+     "name": "닭날개",
+     "unit": "g",
+     "buy_price": 9000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "oil",
+     "name": "식용유",
+     "unit": "ml",
+     "buy_price": 8000,
+     "buy_qty": 1800
+    },
+    {
+     "key": "tofu",
+     "name": "두부",
+     "unit": "모",
+     "buy_price": 1500,
+     "buy_qty": 1
+    },
+    {
+     "key": "kimchi",
+     "name": "김치",
+     "unit": "g",
+     "buy_price": 30000,
+     "buy_qty": 10000
+    },
+    {
+     "key": "pork",
+     "name": "돼지고기",
+     "unit": "g",
+     "buy_price": 13000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "dsquid",
+     "name": "건오징어",
+     "unit": "g",
+     "buy_price": 30000,
+     "buy_qty": 1000
+    }
+   ],
+   "menus": [
+    {
+     "key": "beer500",
+     "name": "생맥주 500cc",
+     "price": 4500,
+     "recipe": [
+      {
+       "ingredient": "beer",
+       "qty": 500
+      }
+     ]
+    },
+    {
+     "key": "soju",
+     "name": "소주",
+     "price": 5000,
+     "recipe": [
+      {
+       "ingredient": "soju",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "key": "wing",
+     "name": "치킨윙",
+     "price": 15000,
+     "recipe": [
+      {
+       "ingredient": "wing",
+       "qty": 400
+      },
+      {
+       "ingredient": "oil",
+       "qty": 100
+      }
+     ]
+    },
+    {
+     "key": "dubu",
+     "name": "두부김치",
+     "price": 15000,
+     "recipe": [
+      {
+       "ingredient": "tofu",
+       "qty": 1
+      },
+      {
+       "ingredient": "kimchi",
+       "qty": 150
+      },
+      {
+       "ingredient": "pork",
+       "qty": 120
+      }
+     ]
+    },
+    {
+     "key": "ojing",
+     "name": "마른오징어",
+     "price": 12000,
+     "recipe": [
+      {
+       "ingredient": "dsquid",
+       "qty": 60
+      }
+     ]
+    }
+   ]
+  },
+  "asian": {
+   "label": "아시아 음식",
+   "store": "예시 쌀국수집",
+   "ingredients": [
+    {
+     "key": "rnoodle",
+     "name": "쌀국수면",
+     "unit": "g",
+     "buy_price": 6000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "brisket",
+     "name": "소고기 양지",
+     "unit": "g",
+     "buy_price": 35000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "broth",
+     "name": "쌀국수 육수",
+     "unit": "ml",
+     "buy_price": 6000,
+     "buy_qty": 2000
+    },
+    {
+     "key": "sprout",
+     "name": "숙주",
+     "unit": "g",
+     "buy_price": 3000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "cilantro",
+     "name": "고수",
+     "unit": "g",
+     "buy_price": 10000,
+     "buy_qty": 500
+    },
+    {
+     "key": "lime",
+     "name": "라임",
+     "unit": "개",
+     "buy_price": 500,
+     "buy_qty": 1
+    },
+    {
+     "key": "ptsauce",
+     "name": "팟타이 소스",
+     "unit": "ml",
+     "buy_price": 9000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "shrimp",
+     "name": "새우",
+     "unit": "g",
+     "buy_price": 25000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "egg",
+     "name": "계란",
+     "unit": "개",
+     "buy_price": 7500,
+     "buy_qty": 30
+    },
+    {
+     "key": "rice",
+     "name": "쌀",
+     "unit": "g",
+     "buy_price": 52000,
+     "buy_qty": 20000
+    }
+   ],
+   "menus": [
+    {
+     "key": "pho",
+     "name": "소고기 쌀국수",
+     "price": 12000,
+     "recipe": [
+      {
+       "ingredient": "rnoodle",
+       "qty": 150
+      },
+      {
+       "ingredient": "brisket",
+       "qty": 60
+      },
+      {
+       "ingredient": "broth",
+       "qty": 450
+      },
+      {
+       "ingredient": "sprout",
+       "qty": 50
+      },
+      {
+       "ingredient": "cilantro",
+       "qty": 5
+      },
+      {
+       "ingredient": "lime",
+       "qty": 0.5
+      }
+     ]
+    },
+    {
+     "key": "padthai",
+     "name": "팟타이",
+     "price": 13000,
+     "recipe": [
+      {
+       "ingredient": "rnoodle",
+       "qty": 150
+      },
+      {
+       "ingredient": "shrimp",
+       "qty": 80
+      },
+      {
+       "ingredient": "ptsauce",
+       "qty": 40
+      },
+      {
+       "ingredient": "sprout",
+       "qty": 40
+      },
+      {
+       "ingredient": "egg",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "key": "nasi",
+     "name": "나시고랭",
+     "price": 12000,
+     "recipe": [
+      {
+       "ingredient": "rice",
+       "qty": 200
+      },
+      {
+       "ingredient": "shrimp",
+       "qty": 50
+      },
+      {
+       "ingredient": "egg",
+       "qty": 1
+      },
+      {
+       "ingredient": "ptsauce",
+       "qty": 20
+      }
+     ]
+    }
+   ]
+  },
+  "salad": {
+   "label": "샐러드",
+   "store": "예시 샐러드 가게",
+   "ingredients": [
+    {
+     "key": "lettuce",
+     "name": "양상추",
+     "unit": "g",
+     "buy_price": 4000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "breast",
+     "name": "닭가슴살",
+     "unit": "g",
+     "buy_price": 12000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "salmon",
+     "name": "연어",
+     "unit": "g",
+     "buy_price": 45000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "ctomato",
+     "name": "방울토마토",
+     "unit": "g",
+     "buy_price": 8000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "dressing",
+     "name": "드레싱",
+     "unit": "ml",
+     "buy_price": 7000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "rice",
+     "name": "쌀",
+     "unit": "g",
+     "buy_price": 52000,
+     "buy_qty": 20000
+    },
+    {
+     "key": "avocado",
+     "name": "아보카도",
+     "unit": "개",
+     "buy_price": 1800,
+     "buy_qty": 1
+    },
+    {
+     "key": "bowl",
+     "name": "샐러드 용기",
+     "unit": "개",
+     "buy_price": 350,
+     "buy_qty": 1
+    }
+   ],
+   "menus": [
+    {
+     "key": "csalad",
+     "name": "닭가슴살 샐러드",
+     "price": 9500,
+     "recipe": [
+      {
+       "ingredient": "lettuce",
+       "qty": 120
+      },
+      {
+       "ingredient": "breast",
+       "qty": 100
+      },
+      {
+       "ingredient": "ctomato",
+       "qty": 60
+      },
+      {
+       "ingredient": "dressing",
+       "qty": 30
+      },
+      {
+       "ingredient": "bowl",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "key": "ssalad",
+     "name": "연어 샐러드",
+     "price": 13500,
+     "recipe": [
+      {
+       "ingredient": "lettuce",
+       "qty": 120
+      },
+      {
+       "ingredient": "salmon",
+       "qty": 80
+      },
+      {
+       "ingredient": "ctomato",
+       "qty": 50
+      },
+      {
+       "ingredient": "dressing",
+       "qty": 30
+      },
+      {
+       "ingredient": "bowl",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "key": "poke",
+     "name": "연어 포케",
+     "price": 14000,
+     "recipe": [
+      {
+       "ingredient": "rice",
+       "qty": 150
+      },
+      {
+       "ingredient": "salmon",
+       "qty": 90
+      },
+      {
+       "ingredient": "avocado",
+       "qty": 0.5
+      },
+      {
+       "ingredient": "dressing",
+       "qty": 25
+      },
+      {
+       "ingredient": "bowl",
+       "qty": 1
+      }
+     ]
+    }
+   ]
+  },
+  "dosirak": {
+   "label": "도시락",
+   "store": "예시 도시락 가게",
+   "ingredients": [
+    {
+     "key": "rice",
+     "name": "쌀",
+     "unit": "g",
+     "buy_price": 52000,
+     "buy_qty": 20000
+    },
+    {
+     "key": "pork",
+     "name": "돼지고기",
+     "unit": "g",
+     "buy_price": 13000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "beef",
+     "name": "소고기 불고기용",
+     "unit": "g",
+     "buy_price": 30000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "kimchi",
+     "name": "김치",
+     "unit": "g",
+     "buy_price": 30000,
+     "buy_qty": 10000
+    },
+    {
+     "key": "egg",
+     "name": "계란",
+     "unit": "개",
+     "buy_price": 7500,
+     "buy_qty": 30
+    },
+    {
+     "key": "onion",
+     "name": "양파",
+     "unit": "g",
+     "buy_price": 4500,
+     "buy_qty": 3000
+    },
+    {
+     "key": "side",
+     "name": "반찬 세트",
+     "unit": "개",
+     "buy_price": 600,
+     "buy_qty": 1
+    },
+    {
+     "key": "dbox",
+     "name": "도시락 용기",
+     "unit": "개",
+     "buy_price": 250,
+     "buy_qty": 1
+    }
+   ],
+   "menus": [
+    {
+     "key": "jbox",
+     "name": "제육 도시락",
+     "price": 8500,
+     "recipe": [
+      {
+       "ingredient": "rice",
+       "qty": 220
+      },
+      {
+       "ingredient": "pork",
+       "qty": 120
+      },
+      {
+       "ingredient": "onion",
+       "qty": 40
+      },
+      {
+       "ingredient": "kimchi",
+       "qty": 40
+      },
+      {
+       "ingredient": "side",
+       "qty": 1
+      },
+      {
+       "ingredient": "dbox",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "key": "bbox",
+     "name": "불고기 도시락",
+     "price": 9500,
+     "recipe": [
+      {
+       "ingredient": "rice",
+       "qty": 220
+      },
+      {
+       "ingredient": "beef",
+       "qty": 100
+      },
+      {
+       "ingredient": "onion",
+       "qty": 40
+      },
+      {
+       "ingredient": "side",
+       "qty": 1
+      },
+      {
+       "ingredient": "dbox",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "key": "ebox",
+     "name": "계란말이 도시락",
+     "price": 7500,
+     "recipe": [
+      {
+       "ingredient": "rice",
+       "qty": 220
+      },
+      {
+       "ingredient": "egg",
+       "qty": 3
+      },
+      {
+       "ingredient": "kimchi",
+       "qty": 40
+      },
+      {
+       "ingredient": "side",
+       "qty": 1
+      },
+      {
+       "ingredient": "dbox",
+       "qty": 1
+      }
+     ]
+    }
+   ]
+  },
+  "etc": {
+   "label": "기타",
+   "store": "예시 가게",
+   "ingredients": [
+    {
+     "key": "lettuce",
+     "name": "양상추",
+     "unit": "g",
+     "buy_price": 4000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "breast",
+     "name": "닭가슴살",
+     "unit": "g",
+     "buy_price": 12000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "ctomato",
+     "name": "방울토마토",
+     "unit": "g",
+     "buy_price": 8000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "dressing",
+     "name": "드레싱",
+     "unit": "ml",
+     "buy_price": 7000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "rice",
+     "name": "쌀",
+     "unit": "g",
+     "buy_price": 52000,
+     "buy_qty": 20000
+    },
+    {
+     "key": "pork",
+     "name": "돼지고기",
+     "unit": "g",
+     "buy_price": 13000,
+     "buy_qty": 1000
+    },
+    {
+     "key": "kimchi",
+     "name": "김치",
+     "unit": "g",
+     "buy_price": 30000,
+     "buy_qty": 10000
+    },
+    {
+     "key": "egg",
+     "name": "계란",
+     "unit": "개",
+     "buy_price": 7500,
+     "buy_qty": 30
+    },
+    {
+     "key": "dbox",
+     "name": "도시락 용기",
+     "unit": "개",
+     "buy_price": 250,
+     "buy_qty": 1
+    }
+   ],
+   "menus": [
+    {
+     "key": "salad",
+     "name": "닭가슴살 샐러드",
+     "price": 9500,
+     "recipe": [
+      {
+       "ingredient": "lettuce",
+       "qty": 120
+      },
+      {
+       "ingredient": "breast",
+       "qty": 100
+      },
+      {
+       "ingredient": "ctomato",
+       "qty": 60
+      },
+      {
+       "ingredient": "dressing",
+       "qty": 30
+      }
+     ]
+    },
+    {
+     "key": "jbox",
+     "name": "제육 도시락",
+     "price": 8500,
+     "recipe": [
+      {
+       "ingredient": "rice",
+       "qty": 220
+      },
+      {
+       "ingredient": "pork",
+       "qty": 120
+      },
+      {
+       "ingredient": "kimchi",
+       "qty": 40
+      },
+      {
+       "ingredient": "egg",
+       "qty": 1
+      },
+      {
+       "ingredient": "dbox",
+       "qty": 1
+      }
+     ]
+    },
+    {
+     "key": "ebox",
+     "name": "계란말이 도시락",
+     "price": 7500,
+     "recipe": [
+      {
+       "ingredient": "rice",
+       "qty": 220
+      },
+      {
+       "ingredient": "egg",
+       "qty": 3
+      },
+      {
+       "ingredient": "kimchi",
+       "qty": 40
+      },
+      {
+       "ingredient": "dbox",
+       "qty": 1
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

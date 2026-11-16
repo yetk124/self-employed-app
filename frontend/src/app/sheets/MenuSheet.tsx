@@ -22,12 +22,15 @@ export default function MenuSheet({ id }: { id?: string }) {
   const S = useStore()
   const { close } = useUi()
   const m0 = S.menus.find((x) => x.id === id)
-  const [d, setD] = useState<Draft>(() => (m0 ? structuredClone(m0) : { id: uid(), name: '', price: '', items: [{ ing: S.ings[0]?.id || '', qty: '' }] }))
+  const [d, setD] = useState<Draft>(() =>
+    m0 ? structuredClone(m0) : { id: uid(), name: '', price: '', items: [{ ing: S.ings[0]?.id || '', qty: '' }] },
+  )
   const p = +d.price || 0
   const items = d.items.map((i) => ({ ing: i.ing, qty: +i.qty || 0 }))
   const c = menuCost(S, { items }),
     rate = p ? (c / p) * 100 : 0
-  const setItem = (i: number, k: 'ing' | 'qty', v: string) => setD({ ...d, items: d.items.map((x, j) => (j === i ? { ...x, [k]: v } : x)) })
+  const setItem = (i: number, k: 'ing' | 'qty', v: string) =>
+    setD({ ...d, items: d.items.map((x, j) => (j === i ? { ...x, [k]: v } : x)) })
 
   const save = () => {
     if (!d.name.trim() || !(p > 0)) return toast('메뉴 이름과 판매가를 입력하세요.')
@@ -37,13 +40,13 @@ export default function MenuSheet({ id }: { id?: string }) {
     if (!m0) m.hist = [{ from: D0, ...e }]
     else {
       m.hist = menuHist(m0)
-      if (p !== +m0.price || JSON.stringify(its) !== JSON.stringify(m0.items)) pushHist(m.hist, { from: todayKey(), ...e })
+      if (p !== +m0.price || JSON.stringify(its) !== JSON.stringify(m0.items))
+        pushHist(m.hist, { from: todayKey(), ...e })
     }
     store.update((s) => {
       const i = s.menus.findIndex((x) => x.id === m.id)
       if (i >= 0) s.menus[i] = m
       else s.menus.push(m)
-      s.sample = false
     })
     close()
     const r = menuCost(store.get(), m) / p
@@ -79,33 +82,76 @@ export default function MenuSheet({ id }: { id?: string }) {
       <PhotoField kind="menu" id={d.id} img={d.img} onChange={(img) => setD({ ...d, img })} />
       <label className="field">
         <span>메뉴 이름</span>
-        <input autoComplete="off" name="m-name" className="inp" value={d.name} placeholder="예: 김치찌개…" onChange={(e) => setD({ ...d, name: e.target.value })} />
+        <input
+          autoComplete="off"
+          name="m-name"
+          className="inp"
+          value={d.name}
+          placeholder="예: 김치찌개…"
+          onChange={(e) => setD({ ...d, name: e.target.value })}
+        />
       </label>
       <label className="field">
         <span>판매가 (원)</span>
-        <input autoComplete="off" name="m-price" className="inp num" type="number" min="0" step="100" value={d.price || ''} placeholder="예: 9000…" onChange={(e) => setD({ ...d, price: e.target.value })} />
+        <input
+          autoComplete="off"
+          name="m-price"
+          className="inp num"
+          type="number"
+          min="0"
+          step="100"
+          value={d.price || ''}
+          placeholder="예: 9000…"
+          onChange={(e) => setD({ ...d, price: e.target.value })}
+        />
       </label>
       <div className="field">
         <span>레시피 · 1인분에 들어가는 양</span>
         {d.items.map((it, i) => (
           <div className="recipe" key={i}>
-            <select autoComplete="off" name={`r-ing-${i}`} className="inp" value={it.ing} onChange={(e) => setItem(i, 'ing', e.target.value)} aria-label="식자재">
+            <select
+              autoComplete="off"
+              name={`r-ing-${i}`}
+              className="inp"
+              value={it.ing}
+              onChange={(e) => setItem(i, 'ing', e.target.value)}
+              aria-label="식자재"
+            >
               {S.ings.map((g) => (
                 <option key={g.id} value={g.id}>
                   {g.name}
                 </option>
               ))}
             </select>
-            <input autoComplete="off" name={`r-qty-${i}`} className="inp num" type="number" min="0" step="any" value={it.qty || ''} placeholder="양…" onChange={(e) => setItem(i, 'qty', e.target.value)} aria-label="양" />
+            <input
+              autoComplete="off"
+              name={`r-qty-${i}`}
+              className="inp num"
+              type="number"
+              min="0"
+              step="any"
+              value={it.qty || ''}
+              placeholder="양…"
+              onChange={(e) => setItem(i, 'qty', e.target.value)}
+              aria-label="양"
+            />
             <div className="row" style={{ flexWrap: 'nowrap', gap: 0 }}>
               <span className="u num">{findIng(S, it.ing)?.unit || ''}</span>
-              <button className="x" onClick={() => setD({ ...d, items: d.items.filter((_, j) => j !== i) })} aria-label="재료 삭제">
+              <button
+                className="x"
+                onClick={() => setD({ ...d, items: d.items.filter((_, j) => j !== i) })}
+                aria-label="재료 삭제"
+              >
                 <Icon name="x" width={20} height={20} />
               </button>
             </div>
           </div>
         ))}
-        <button className="link" style={{ alignSelf: 'flex-start', marginTop: 8 }} onClick={() => setD({ ...d, items: [...d.items, { ing: S.ings[0].id, qty: '' }] })}>
+        <button
+          className="link"
+          style={{ alignSelf: 'flex-start', marginTop: 8 }}
+          onClick={() => setD({ ...d, items: [...d.items, { ing: S.ings[0].id, qty: '' }] })}
+        >
           재료 추가
         </button>
       </div>

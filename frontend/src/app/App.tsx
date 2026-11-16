@@ -18,7 +18,7 @@ import Guide from './sheets/receipt/Guide'
 import ReceiptSheet from './sheets/receipt/ReceiptSheet'
 import SalesSheet from './sheets/SalesSheet'
 import { BellSheet, DaySheet, DocSheet, GateSheet, RcViewSheet, TxAllSheet } from './sheets/smallSheets'
-import { store } from './state/store'
+import { store, useStore } from './state/store'
 import { useUi } from './state/ui'
 
 /** 화면 위에 뜨는 창 */
@@ -54,11 +54,21 @@ function Layer() {
 }
 
 /** 화면 순서: 오른쪽 탭으로 가면 오른쪽에서 들어오는 효과 */
-const ORDER: Record<string, number> = { '/': 0, '/metrics': 0.5, '/ledger': 1, '/manage': 2, '/settings': 3, '/auth': 4, '/onboarding': 5 }
+const ORDER: Record<string, number> = {
+  '/': 0,
+  '/metrics': 0.5,
+  '/ledger': 1,
+  '/manage': 2,
+  '/settings': 3,
+  '/auth': 4,
+  '/onboarding': 5,
+}
 let lastPath = ''
 
 export default function App() {
   const { pathname, hash } = useLocation()
+  const onboarded = useStore().onboarded
+  const signed = !!useStore().user
   const dir = (ORDER[pathname] ?? 0) >= (ORDER[lastPath] ?? 0) ? 1 : -1
   const changed = lastPath !== '' && lastPath !== pathname
   useEffect(() => {
@@ -72,7 +82,7 @@ export default function App() {
     return () => clearTimeout(t)
   }, [pathname, hash])
 
-  // 30초마다: 날짜가 바뀌었으면 예시 데이터 채우기, 마감 알림
+  // 30초마다: 날짜가 바뀌었는지 확인, 마감 알림
   useEffect(() => {
     let day = todayKey()
     const tick = async () => {
@@ -90,9 +100,22 @@ export default function App() {
     return () => clearInterval(id)
   }, [])
 
+  // 아직 가게가 없으면: 로그인 화면 → (로그인하거나 '가입 없이 시작') → 온보딩
+  if (!onboarded && pathname !== '/auth' && pathname !== '/onboarding')
+    return <Navigate to={signed ? '/onboarding' : '/auth'} replace />
+
   const isAuth = pathname === '/auth'
   const tabbed = !isAuth && pathname !== '/onboarding'
-  const cls = ['app', changed && 'enter', isAuth && 'authbg', tabbed && 'homebg', pathname === '/manage' && 'mgmt', pathname === '/settings' && 'setpg'].filter(Boolean).join(' ')
+  const cls = [
+    'app',
+    changed && 'enter',
+    isAuth && 'authbg',
+    tabbed && 'homebg',
+    pathname === '/manage' && 'mgmt',
+    pathname === '/settings' && 'setpg',
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
     <>

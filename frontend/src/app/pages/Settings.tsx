@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import { track } from '@/shared/analytics'
 import { toast } from '@/shared/toast'
+import { api, hasServer } from '../api/client'
+import { disconnect, syncOn } from '../api/sync'
 import { Auth, PROV } from '../auth/auth'
 import { ArmButton, BizGrid, PageTitle, Toggle } from '../components/bits'
 import Icon from '../components/Icon'
 import { TPL } from '../data/templates'
 import { autoGoal } from '../lib/calc'
 import { WD } from '../lib/date'
-import { clearDemo, fillDemo, seed } from '../lib/demo'
+import { blank, seed } from '../lib/seed'
 import { uid, won } from '../lib/format'
 import { askNotify, install } from '../lib/pwa'
 import { store, useStore } from '../state/store'
@@ -32,8 +34,9 @@ export default function Settings() {
   const pickTpl = (k: BizKey) => {
     if (tplArm !== k) return setTplArm(k)
     setTplArm(null)
-    const next = seed(k, false)
+    const next = seed(k)
     next.user = S.user
+    next.settings.store = S.settings.store || next.settings.store
     next.onboarded = S.onboarded
     store.replace(next)
     go('/manage')
@@ -60,10 +63,15 @@ export default function Settings() {
                 armed="한 번 더 누르면 로그아웃"
                 onConfirm={async () => {
                   await Auth.signOut()
-                  store.update((x) => {
-                    x.user = null
-                  })
-                  go('/')
+                  // 서버에 저장된 계정이면 기기에서는 지워요 (다른 사람이 이 기기를 써도 안 보이게)
+                  const wasSynced = syncOn()
+                  disconnect()
+                  if (wasSynced) store.replace(blank())
+                  else
+                    store.update((x) => {
+                      x.user = null
+                    })
+                  go(wasSynced ? '/auth' : '/')
                   toast('로그아웃했어요.')
                 }}
               >
@@ -86,7 +94,13 @@ export default function Settings() {
           )}
           <label className="field">
             <span>가게 이름</span>
-            <input autoComplete="off" name="set-store" className="inp" value={s.store} onChange={(e) => set('store', e.target.value)} />
+            <input
+              autoComplete="off"
+              name="set-store"
+              className="inp"
+              value={s.store}
+              onChange={(e) => set('store', e.target.value)}
+            />
           </label>
         </section>
 
@@ -110,7 +124,10 @@ export default function Settings() {
               onChange={(e) => set('goal', e.target.value)}
             />
           </label>
-          <p className="hint">장부 달력의 목표 달성 표시와 ‘연속 목표 달성’ 알림이 이 금액 기준이에요. 비워 두면 최근 4주 평균 매출로 정해요.</p>
+          <p className="hint">
+            장부 달력의 목표 달성 표시와 ‘연속 목표 달성’ 알림이 이 금액 기준이에요. 비워 두면 최근 4주 평균 매출로
+            정해요.
+          </p>
         </section>
 
         <section className="hcard">
@@ -142,9 +159,36 @@ export default function Settings() {
               })
             return (
               <div className="chrow" key={c.id}>
-                <input autoComplete="off" name={`ch-n-${c.id}`} className="inp" value={c.name} onChange={(e) => setCh('name', e.target.value)} aria-label="채널 이름" />
-                <input autoComplete="off" name={`ch-f-${c.id}`} className="inp num" type="number" step="0.1" min="0" value={c.fee} onChange={(e) => setCh('fee', e.target.value)} aria-label="수수료 %" />
-                <input autoComplete="off" name={`ch-x-${c.id}`} className="inp num" type="number" step="10" min="0" value={c.fixed || 0} onChange={(e) => setCh('fixed', e.target.value)} aria-label="개당 추가비용(원)" />
+                <input
+                  autoComplete="off"
+                  name={`ch-n-${c.id}`}
+                  className="inp"
+                  value={c.name}
+                  onChange={(e) => setCh('name', e.target.value)}
+                  aria-label="채널 이름"
+                />
+                <input
+                  autoComplete="off"
+                  name={`ch-f-${c.id}`}
+                  className="inp num"
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  value={c.fee}
+                  onChange={(e) => setCh('fee', e.target.value)}
+                  aria-label="수수료 %"
+                />
+                <input
+                  autoComplete="off"
+                  name={`ch-x-${c.id}`}
+                  className="inp num"
+                  type="number"
+                  step="10"
+                  min="0"
+                  value={c.fixed || 0}
+                  onChange={(e) => setCh('fixed', e.target.value)}
+                  aria-label="개당 추가비용(원)"
+                />
                 <button
                   className="x"
                   aria-label="채널 삭제"
@@ -169,7 +213,9 @@ export default function Settings() {
           </div>
           <div className="row between" style={{ marginTop: 10 }}>
             <div>
-              <div style={{ color: 'var(--hwp-color-foreground)', fontWeight: 500 }}>영업 종료 시각에 판매 입력 알림</div>
+              <div style={{ color: 'var(--hwp-color-foreground)', fontWeight: 500 }}>
+                영업 종료 시각에 판매 입력 알림
+              </div>
               <div className="hint" style={{ margin: 0 }}>
                 앱이 열려 있거나 설치돼 있을 때 알려드려요.
               </div>
@@ -182,18 +228,36 @@ export default function Settings() {
                 set('notify', on)
                 if (!on) return setNotifyMsg('')
                 const p = await askNotify()
-                setNotifyMsg(p === 'granted' ? `매일 ${s.close}에 알려드려요.` : '휴대폰 알림이 꺼져 있어 앱 안에서만 알려드려요. 홈 화면에 설치하면 휴대폰 알림을 켤 수 있어요.')
+                setNotifyMsg(
+                  p === 'granted'
+                    ? `매일 ${s.close}에 알려드려요.`
+                    : '휴대폰 알림이 꺼져 있어 앱 안에서만 알려드려요. 홈 화면에 설치하면 휴대폰 알림을 켤 수 있어요.',
+                )
               }}
             />
           </div>
           <div className="grid2">
             <label className="field">
               <span>영업 시작 시각</span>
-              <input autoComplete="off" name="set-open" className="inp num" type="time" value={s.open || '11:00'} onChange={(e) => set('open', e.target.value)} />
+              <input
+                autoComplete="off"
+                name="set-open"
+                className="inp num"
+                type="time"
+                value={s.open || '11:00'}
+                onChange={(e) => set('open', e.target.value)}
+              />
             </label>
             <label className="field">
               <span>영업 종료 시각</span>
-              <input autoComplete="off" name="set-close" className="inp num" type="time" value={s.close} onChange={(e) => set('close', e.target.value)} />
+              <input
+                autoComplete="off"
+                name="set-close"
+                className="inp num"
+                type="time"
+                value={s.close}
+                onChange={(e) => set('close', e.target.value)}
+              />
             </label>
           </div>
           <p className="hint">{notifyMsg}</p>
@@ -226,7 +290,10 @@ export default function Settings() {
               ))}
             </div>
           </div>
-          <p className="hint">임시 휴무는 장부 달력에서 날짜를 눌러 표시해요. 휴무일은 마감 알림을 보내지 않고, 평균과 이번 달 예상 매출 계산에서 빠져요.</p>
+          <p className="hint">
+            임시 휴무는 장부 달력에서 날짜를 눌러 표시해요. 휴무일은 마감 알림을 보내지 않고, 평균과 이번 달 예상 매출
+            계산에서 빠져요.
+          </p>
         </section>
 
         <section className="hcard">
@@ -264,43 +331,6 @@ export default function Settings() {
               </span>
               <Icon name="chev" />
             </button>
-            {S.demo?.days.length ? (
-              <ArmButton
-                className="setrow"
-                icon="bars"
-                armed="한 번 더 누르면 지워요"
-                sub={`그래프 확인용으로 넣은 예시 매출 ${S.demo.days.length}일치`}
-                onConfirm={() => {
-                  let n = 0
-                  store.update((x) => {
-                    n = clearDemo(x)
-                  })
-                  toast(`임시 데이터 ${n}일치를 지웠어요. 직접 입력한 기록은 그대로예요.`)
-                }}
-              >
-                임시 데이터 지우기
-              </ArmButton>
-            ) : (
-              <button
-                className="setrow"
-                onClick={() => {
-                  store.update((x) => {
-                    x.demoOff = false
-                    fillDemo(x)
-                  })
-                  toast('임시 데이터를 넣었어요. 홈 그래프에서 확인해 보세요.')
-                }}
-              >
-                <span className="sr-i">
-                  <Icon name="bars" />
-                </span>
-                <span className="sr-m">
-                  <b>임시 데이터 넣기</b>
-                  <small>그래프를 확인할 수 있게 예시 매출을 채워요</small>
-                </span>
-                <Icon name="chev" />
-              </button>
-            )}
             <ArmButton
               className="setrow danger"
               icon="x"
@@ -309,7 +339,7 @@ export default function Settings() {
               onConfirm={() => {
                 store.update((x) => {
                   x.sales = {}
-                  x.sample = false
+                  x.adj = {}
                 })
                 toast('판매 기록을 비웠어요.')
               }}
@@ -330,10 +360,17 @@ export default function Settings() {
                 armed="한 번 더 누르면 모든 기록이 삭제돼요"
                 sub="이 계정에 저장된 메뉴·식자재·판매 기록이 모두 삭제돼요"
                 onConfirm={async () => {
+                  if (hasServer && syncOn())
+                    try {
+                      await api('/me', { method: 'DELETE' })
+                    } catch {
+                      return toast('서버에서 기록을 지우지 못했어요. 잠시 후 다시 시도해 주세요.')
+                    }
                   await Auth.signOut()
                   track('withdraw')
-                  store.replace(seed('hansik', true))
-                  go('/')
+                  disconnect()
+                  store.replace(blank())
+                  go('/auth')
                   toast('탈퇴했어요. 그동안 이용해 주셔서 고마워요.')
                 }}
               >

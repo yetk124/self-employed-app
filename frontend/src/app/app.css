@@ -1199,3 +1199,7 @@ i.k1{background:var(--pk1)}i.k2{background:var(--pk2)}i.k3{background:var(--pk3)
 
 /* 설정 > 로그아웃 (프로토타입 인라인 스타일 옮김) */
 .acct .link.logout{font-size:var(--hwp-font-headline-2);color:var(--hwp-color-text-secondary)}
+
+/* 앱 화면이 항상 화면 높이까지 채워지게 (#root 높이가 없어서 아래가 잘려 보이던 문제) */
+#root{min-height:100%}
+.app{min-height:100vh;min-height:100dvh}

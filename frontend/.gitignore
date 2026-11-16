@@ -24,3 +24,8 @@ dist-ssr
 *.sln
 *.sw?
 dev-dist
+
+# 비밀 키
+.env
+.env.*
+!.env.example

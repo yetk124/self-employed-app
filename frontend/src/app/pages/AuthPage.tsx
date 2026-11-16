@@ -65,18 +65,30 @@ export default function AuthPage() {
             휴대폰을 바꿔도 그대로 이어서 쓸 수 있어요.
           </p>
           <SocialButtons onOauth={oauth} onEmail={() => setAuth({ mode: 'email', tab: 'signup' })} divider />
-          <p style={{ margin: '16px 0 0', fontSize: 'var(--hwp-font-headline-2)', color: 'var(--hwp-color-text-secondary)' }}>
+          <p
+            style={{
+              margin: '16px 0 0',
+              fontSize: 'var(--hwp-font-headline-2)',
+              color: 'var(--hwp-color-text-secondary)',
+            }}
+          >
             이미 이메일로 가입했나요?{' '}
-            <button className="link" style={{ fontSize: 'inherit' }} onClick={() => setAuth({ mode: 'email', tab: 'login' })}>
+            <button
+              className="link"
+              style={{ fontSize: 'inherit' }}
+              onClick={() => setAuth({ mode: 'email', tab: 'login' })}
+            >
               이메일 로그인
             </button>
           </p>
           {!S.user && (
-            <button className="later" onClick={leave}>
-              가입 없이 둘러볼게요
+            <button className="later" onClick={() => (S.onboarded ? leave() : nav('/onboarding'))}>
+              가입 없이 시작할게요
             </button>
           )}
-          {AUTH_MOCK && <p className="mode">지금은 체험 모드예요. 실제 카카오·구글 연결 없이 이 기기 안에서만 로그인돼요.</p>}
+          {AUTH_MOCK && (
+            <p className="mode">지금은 체험 모드예요. 실제 카카오·구글 연결 없이 이 기기 안에서만 로그인돼요.</p>
+          )}
         </div>
       </>
     )
@@ -181,7 +193,13 @@ export default function AuthPage() {
               </label>
               <div className="agrees">
                 <label className="agree all">
-                  <input type="checkbox" checked={all} onChange={(e) => setAgree({ terms: e.target.checked, privacy: e.target.checked, mkt: e.target.checked })} />
+                  <input
+                    type="checkbox"
+                    checked={all}
+                    onChange={(e) =>
+                      setAgree({ terms: e.target.checked, privacy: e.target.checked, mkt: e.target.checked })
+                    }
+                  />
                   <span className="grow">전체 동의</span>
                 </label>
                 {(
@@ -191,7 +209,11 @@ export default function AuthPage() {
                   ] as const
                 ).map(([k, l]) => (
                   <label className="agree" key={k}>
-                    <input type="checkbox" checked={agree[k]} onChange={(e) => setAgree({ ...agree, [k]: e.target.checked })} />
+                    <input
+                      type="checkbox"
+                      checked={agree[k]}
+                      onChange={(e) => setAgree({ ...agree, [k]: e.target.checked })}
+                    />
                     <span className="grow">
                       <span className="req">[필수]</span> {l}
                     </span>
@@ -208,7 +230,11 @@ export default function AuthPage() {
                   </label>
                 ))}
                 <label className="agree">
-                  <input type="checkbox" checked={agree.mkt} onChange={(e) => setAgree({ ...agree, mkt: e.target.checked })} />
+                  <input
+                    type="checkbox"
+                    checked={agree.mkt}
+                    onChange={(e) => setAgree({ ...agree, mkt: e.target.checked })}
+                  />
                   <span className="grow">
                     <span className="opt">[선택]</span> 이벤트·혜택 알림 받기
                   </span>

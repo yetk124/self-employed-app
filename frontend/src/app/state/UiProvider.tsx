@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import { useLocation, useNavigate } from 'react-router'
 import { track } from '@/shared/analytics'
 import { toast } from '@/shared/toast'
+import { connect, resume } from '../api/sync'
 import { Auth, PROV } from '../auth/auth'
 import { todayKey } from '../lib/date'
 import type { User } from '../types'
@@ -61,7 +62,8 @@ export default function UiProvider({ children }: { children: ReactNode }) {
   }, [runPending])
 
   const openReceipt = useCallback(() => {
-    const go = () => (store.get().ocrGuideSeen ? setLayer({ kind: 'receipt' }) : setLayer({ kind: 'guide', thenReceipt: true }))
+    const go = () =>
+      store.get().ocrGuideSeen ? setLayer({ kind: 'receipt' }) : setLayer({ kind: 'guide', thenReceipt: true })
     if (store.get().user || gateSkipped.current) go()
     else {
       pending.current = store.get().ocrGuideSeen ? { kind: 'receipt' } : { kind: 'guide', thenReceipt: true }
@@ -86,30 +88,38 @@ export default function UiProvider({ children }: { children: ReactNode }) {
   )
 
   const signedIn = useCallback(
-    (u: User, isNew: boolean) => {
+    async (u: User) => {
       const S = store.get()
       store.update((s) => {
         s.user = { ...u, since: S.user?.since || new Date().toISOString() }
       })
       track('login', { method: u.provider })
-      if (isNew && !S.onboarded) {
+      // 서버 가게 연결: 있으면 내려받고, 기기에서 쓰던 가게가 있으면 서버로 옮겨요
+      const r = await connect()
+      if (r === 'imported') toast('이 기기에 입력한 기록을 계정에 옮겼어요.')
+      if (!store.get().onboarded) {
         nav('/onboarding')
         scrollTo(0, 0)
       } else {
         const from = auth.from && !['/auth', '/onboarding'].includes(auth.from) ? auth.from : '/'
         nav(from)
-        toast(`${PROV[u.provider]} 계정으로 로그인했어요.`)
+        if (r !== 'imported') toast(`${PROV[u.provider]} 계정으로 로그인했어요.`)
         runPending()
       }
     },
     [auth.from, nav, runPending],
   )
 
+  // 앱을 열 때 이미 로그인돼 있으면 서버 최신 데이터로 맞추기
+  useEffect(() => {
+    void resume()
+  }, [])
+
   // 카카오·구글에서 돌아왔을 때
   useEffect(() => {
     let off: (() => void) | undefined
     Auth.onSession((u) => {
-      if (!store.get().user) signedIn(u, !store.get().onboarded)
+      if (!store.get().user) void signedIn(u)
     }).then((f) => (off = f))
     return () => off?.()
   }, [signedIn])
@@ -124,7 +134,24 @@ export default function UiProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const value = useMemo<UiCtx>(
-    () => ({ sel, setSel, ch, setCh, layer, open, close, gate, skipGate, openReceipt, salesToday, go, auth, setAuth, openAuth, signedIn }),
+    () => ({
+      sel,
+      setSel,
+      ch,
+      setCh,
+      layer,
+      open,
+      close,
+      gate,
+      skipGate,
+      openReceipt,
+      salesToday,
+      go,
+      auth,
+      setAuth,
+      openAuth,
+      signedIn,
+    }),
     [sel, ch, layer, open, close, gate, skipGate, openReceipt, salesToday, go, auth, setAuth, openAuth, signedIn],
   )
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>

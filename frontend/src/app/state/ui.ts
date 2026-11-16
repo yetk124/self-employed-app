@@ -45,7 +45,7 @@ export interface UiCtx {
   auth: AuthUi
   setAuth: (p: Partial<AuthUi>) => void
   openAuth: (p?: Partial<AuthUi>) => void
-  signedIn: (u: User, isNew: boolean) => void
+  signedIn: (u: User, isNew?: boolean) => void | Promise<void>
 }
 
 export const Ctx = createContext<UiCtx | null>(null)

@@ -47,10 +47,53 @@ export const TPL: Record<BizKey, Template> = {
       ['zucchini', '애호박', '개', 1500, 1],
     ],
     menus: [
-      ['kjj', '김치찌개', 9000, [['kimchi', 200], ['pork', 100], ['tofu', 0.5], ['scallion', 20], ['rice', 200]]],
-      ['jeyuk', '제육볶음', 11000, [['pork', 200], ['onion', 100], ['chili', 15], ['scallion', 30], ['rice', 200]]],
-      ['djj', '된장찌개', 8000, [['tofu', 1], ['doenjang', 40], ['zucchini', 0.5], ['onion', 50], ['scallion', 20], ['rice', 200]]],
-      ['egg', '계란말이', 7000, [['egg', 4], ['scallion', 20], ['onion', 30]]],
+      [
+        'kjj',
+        '김치찌개',
+        9000,
+        [
+          ['kimchi', 200],
+          ['pork', 100],
+          ['tofu', 0.5],
+          ['scallion', 20],
+          ['rice', 200],
+        ],
+      ],
+      [
+        'jeyuk',
+        '제육볶음',
+        11000,
+        [
+          ['pork', 200],
+          ['onion', 100],
+          ['chili', 15],
+          ['scallion', 30],
+          ['rice', 200],
+        ],
+      ],
+      [
+        'djj',
+        '된장찌개',
+        8000,
+        [
+          ['tofu', 1],
+          ['doenjang', 40],
+          ['zucchini', 0.5],
+          ['onion', 50],
+          ['scallion', 20],
+          ['rice', 200],
+        ],
+      ],
+      [
+        'egg',
+        '계란말이',
+        7000,
+        [
+          ['egg', 4],
+          ['scallion', 20],
+          ['onion', 30],
+        ],
+      ],
     ],
   },
   cafe: {
@@ -64,9 +107,39 @@ export const TPL: Record<BizKey, Template> = {
       ['ice', '얼음', 'g', 3000, 3000],
     ],
     menus: [
-      ['ame', '아메리카노', 4000, [['bean', 20], ['cup', 1], ['ice', 150]]],
-      ['latte', '카페라떼', 4800, [['bean', 20], ['milk', 200], ['cup', 1], ['ice', 150]]],
-      ['vanilla', '바닐라라떼', 5300, [['bean', 20], ['milk', 200], ['syrup', 20], ['cup', 1], ['ice', 150]]],
+      [
+        'ame',
+        '아메리카노',
+        4000,
+        [
+          ['bean', 20],
+          ['cup', 1],
+          ['ice', 150],
+        ],
+      ],
+      [
+        'latte',
+        '카페라떼',
+        4800,
+        [
+          ['bean', 20],
+          ['milk', 200],
+          ['cup', 1],
+          ['ice', 150],
+        ],
+      ],
+      [
+        'vanilla',
+        '바닐라라떼',
+        5300,
+        [
+          ['bean', 20],
+          ['milk', 200],
+          ['syrup', 20],
+          ['cup', 1],
+          ['ice', 150],
+        ],
+      ],
     ],
   },
   bunsik: {
@@ -83,9 +156,37 @@ export const TPL: Record<BizKey, Template> = {
       ['scallion', '대파', 'g', 3000, 1000],
     ],
     menus: [
-      ['tbk', '떡볶이', 5000, [['tteok', 300], ['fishcake', 100], ['gochujang', 50], ['scallion', 20]]],
-      ['gimbap', '김밥', 4000, [['rice', 150], ['laver', 1], ['danmuji', 20], ['egg', 1]]],
-      ['odeng', '어묵탕', 3000, [['fishcake', 150], ['scallion', 10]]],
+      [
+        'tbk',
+        '떡볶이',
+        5000,
+        [
+          ['tteok', 300],
+          ['fishcake', 100],
+          ['gochujang', 50],
+          ['scallion', 20],
+        ],
+      ],
+      [
+        'gimbap',
+        '김밥',
+        4000,
+        [
+          ['rice', 150],
+          ['laver', 1],
+          ['danmuji', 20],
+          ['egg', 1],
+        ],
+      ],
+      [
+        'odeng',
+        '어묵탕',
+        3000,
+        [
+          ['fishcake', 150],
+          ['scallion', 10],
+        ],
+      ],
     ],
   },
   junsik: {
@@ -103,9 +204,43 @@ export const TPL: Record<BizKey, Template> = {
       ['danmuji', '단무지', 'g', 4000, 1000],
     ],
     menus: [
-      ['jjm', '짜장면', 7000, [['noodle', 200], ['chunjang', 40], ['pork', 50], ['onion', 80], ['oil', 15], ['danmuji', 20]]],
-      ['jjb', '짬뽕', 8500, [['noodle', 200], ['squid', 60], ['pork', 40], ['onion', 60], ['chili', 10], ['danmuji', 20]]],
-      ['tsy', '탕수육', 18000, [['pork', 300], ['starch', 80], ['oil', 120], ['onion', 50]]],
+      [
+        'jjm',
+        '짜장면',
+        7000,
+        [
+          ['noodle', 200],
+          ['chunjang', 40],
+          ['pork', 50],
+          ['onion', 80],
+          ['oil', 15],
+          ['danmuji', 20],
+        ],
+      ],
+      [
+        'jjb',
+        '짬뽕',
+        8500,
+        [
+          ['noodle', 200],
+          ['squid', 60],
+          ['pork', 40],
+          ['onion', 60],
+          ['chili', 10],
+          ['danmuji', 20],
+        ],
+      ],
+      [
+        'tsy',
+        '탕수육',
+        18000,
+        [
+          ['pork', 300],
+          ['starch', 80],
+          ['oil', 120],
+          ['onion', 50],
+        ],
+      ],
     ],
   },
   ilsik: {
@@ -123,9 +258,39 @@ export const TPL: Record<BizKey, Template> = {
       ['broth', '돈코츠 육수', 'ml', 10000, 2000],
     ],
     menus: [
-      ['sushi', '연어 초밥', 16000, [['rice', 200], ['salmon', 120], ['wasabi', 5]]],
-      ['katsu', '돈카츠', 12000, [['loin', 180], ['panko', 40], ['oil', 80], ['egg', 1], ['rice', 200]]],
-      ['ramen', '돈코츠 라멘', 11000, [['rnoodle', 150], ['broth', 400], ['loin', 50], ['egg', 1]]],
+      [
+        'sushi',
+        '연어 초밥',
+        16000,
+        [
+          ['rice', 200],
+          ['salmon', 120],
+          ['wasabi', 5],
+        ],
+      ],
+      [
+        'katsu',
+        '돈카츠',
+        12000,
+        [
+          ['loin', 180],
+          ['panko', 40],
+          ['oil', 80],
+          ['egg', 1],
+          ['rice', 200],
+        ],
+      ],
+      [
+        'ramen',
+        '돈코츠 라멘',
+        11000,
+        [
+          ['rnoodle', 150],
+          ['broth', 400],
+          ['loin', 50],
+          ['egg', 1],
+        ],
+      ],
     ],
   },
   yangsik: {
@@ -143,10 +308,49 @@ export const TPL: Record<BizKey, Template> = {
       ['beef', '소고기 채끝', 'g', 60000, 1000],
     ],
     menus: [
-      ['tpasta', '토마토 파스타', 14000, [['pasta', 120], ['tomato', 150], ['garlic', 10], ['olive', 15]]],
-      ['cpasta', '크림 파스타', 15000, [['pasta', 120], ['cream', 150], ['bacon', 40], ['garlic', 10]]],
-      ['pizza', '마르게리타 피자', 18000, [['dough', 1], ['tomato', 80], ['mozza', 150], ['olive', 10]]],
-      ['steak', '채끝 스테이크', 32000, [['beef', 220], ['olive', 10], ['garlic', 10]]],
+      [
+        'tpasta',
+        '토마토 파스타',
+        14000,
+        [
+          ['pasta', 120],
+          ['tomato', 150],
+          ['garlic', 10],
+          ['olive', 15],
+        ],
+      ],
+      [
+        'cpasta',
+        '크림 파스타',
+        15000,
+        [
+          ['pasta', 120],
+          ['cream', 150],
+          ['bacon', 40],
+          ['garlic', 10],
+        ],
+      ],
+      [
+        'pizza',
+        '마르게리타 피자',
+        18000,
+        [
+          ['dough', 1],
+          ['tomato', 80],
+          ['mozza', 150],
+          ['olive', 10],
+        ],
+      ],
+      [
+        'steak',
+        '채끝 스테이크',
+        32000,
+        [
+          ['beef', 220],
+          ['olive', 10],
+          ['garlic', 10],
+        ],
+      ],
     ],
   },
   fastfood: {
@@ -166,10 +370,51 @@ export const TPL: Record<BizKey, Template> = {
       ['fries', '냉동 감자', 'g', 6000, 2000],
     ],
     menus: [
-      ['fried', '후라이드 치킨', 20000, [['chicken', 1], ['flour', 150], ['oil', 300], ['mu', 1], ['box', 1]]],
-      ['yangnyeom', '양념치킨', 21000, [['chicken', 1], ['flour', 150], ['oil', 300], ['sauce', 80], ['mu', 1], ['box', 1]]],
-      ['burger', '치즈버거', 7500, [['bun', 1], ['patty', 1], ['cheese', 1], ['lettuce', 20]]],
-      ['fries', '감자튀김', 3000, [['fries', 150], ['oil', 50]]],
+      [
+        'fried',
+        '후라이드 치킨',
+        20000,
+        [
+          ['chicken', 1],
+          ['flour', 150],
+          ['oil', 300],
+          ['mu', 1],
+          ['box', 1],
+        ],
+      ],
+      [
+        'yangnyeom',
+        '양념치킨',
+        21000,
+        [
+          ['chicken', 1],
+          ['flour', 150],
+          ['oil', 300],
+          ['sauce', 80],
+          ['mu', 1],
+          ['box', 1],
+        ],
+      ],
+      [
+        'burger',
+        '치즈버거',
+        7500,
+        [
+          ['bun', 1],
+          ['patty', 1],
+          ['cheese', 1],
+          ['lettuce', 20],
+        ],
+      ],
+      [
+        'fries',
+        '감자튀김',
+        3000,
+        [
+          ['fries', 150],
+          ['oil', 50],
+        ],
+      ],
     ],
   },
   pub: {
@@ -188,8 +433,25 @@ export const TPL: Record<BizKey, Template> = {
     menus: [
       ['beer500', '생맥주 500cc', 4500, [['beer', 500]]],
       ['soju', '소주', 5000, [['soju', 1]]],
-      ['wing', '치킨윙', 15000, [['wing', 400], ['oil', 100]]],
-      ['dubu', '두부김치', 15000, [['tofu', 1], ['kimchi', 150], ['pork', 120]]],
+      [
+        'wing',
+        '치킨윙',
+        15000,
+        [
+          ['wing', 400],
+          ['oil', 100],
+        ],
+      ],
+      [
+        'dubu',
+        '두부김치',
+        15000,
+        [
+          ['tofu', 1],
+          ['kimchi', 150],
+          ['pork', 120],
+        ],
+      ],
       ['ojing', '마른오징어', 12000, [['dsquid', 60]]],
     ],
   },
@@ -209,9 +471,42 @@ export const TPL: Record<BizKey, Template> = {
       ['rice', '쌀', 'g', 52000, 20000],
     ],
     menus: [
-      ['pho', '소고기 쌀국수', 12000, [['rnoodle', 150], ['brisket', 60], ['broth', 450], ['sprout', 50], ['cilantro', 5], ['lime', 0.5]]],
-      ['padthai', '팟타이', 13000, [['rnoodle', 150], ['shrimp', 80], ['ptsauce', 40], ['sprout', 40], ['egg', 1]]],
-      ['nasi', '나시고랭', 12000, [['rice', 200], ['shrimp', 50], ['egg', 1], ['ptsauce', 20]]],
+      [
+        'pho',
+        '소고기 쌀국수',
+        12000,
+        [
+          ['rnoodle', 150],
+          ['brisket', 60],
+          ['broth', 450],
+          ['sprout', 50],
+          ['cilantro', 5],
+          ['lime', 0.5],
+        ],
+      ],
+      [
+        'padthai',
+        '팟타이',
+        13000,
+        [
+          ['rnoodle', 150],
+          ['shrimp', 80],
+          ['ptsauce', 40],
+          ['sprout', 40],
+          ['egg', 1],
+        ],
+      ],
+      [
+        'nasi',
+        '나시고랭',
+        12000,
+        [
+          ['rice', 200],
+          ['shrimp', 50],
+          ['egg', 1],
+          ['ptsauce', 20],
+        ],
+      ],
     ],
   },
   salad: {
@@ -228,9 +523,42 @@ export const TPL: Record<BizKey, Template> = {
       ['bowl', '샐러드 용기', '개', 350, 1],
     ],
     menus: [
-      ['csalad', '닭가슴살 샐러드', 9500, [['lettuce', 120], ['breast', 100], ['ctomato', 60], ['dressing', 30], ['bowl', 1]]],
-      ['ssalad', '연어 샐러드', 13500, [['lettuce', 120], ['salmon', 80], ['ctomato', 50], ['dressing', 30], ['bowl', 1]]],
-      ['poke', '연어 포케', 14000, [['rice', 150], ['salmon', 90], ['avocado', 0.5], ['dressing', 25], ['bowl', 1]]],
+      [
+        'csalad',
+        '닭가슴살 샐러드',
+        9500,
+        [
+          ['lettuce', 120],
+          ['breast', 100],
+          ['ctomato', 60],
+          ['dressing', 30],
+          ['bowl', 1],
+        ],
+      ],
+      [
+        'ssalad',
+        '연어 샐러드',
+        13500,
+        [
+          ['lettuce', 120],
+          ['salmon', 80],
+          ['ctomato', 50],
+          ['dressing', 30],
+          ['bowl', 1],
+        ],
+      ],
+      [
+        'poke',
+        '연어 포케',
+        14000,
+        [
+          ['rice', 150],
+          ['salmon', 90],
+          ['avocado', 0.5],
+          ['dressing', 25],
+          ['bowl', 1],
+        ],
+      ],
     ],
   },
   dosirak: {
@@ -247,9 +575,43 @@ export const TPL: Record<BizKey, Template> = {
       ['dbox', '도시락 용기', '개', 250, 1],
     ],
     menus: [
-      ['jbox', '제육 도시락', 8500, [['rice', 220], ['pork', 120], ['onion', 40], ['kimchi', 40], ['side', 1], ['dbox', 1]]],
-      ['bbox', '불고기 도시락', 9500, [['rice', 220], ['beef', 100], ['onion', 40], ['side', 1], ['dbox', 1]]],
-      ['ebox', '계란말이 도시락', 7500, [['rice', 220], ['egg', 3], ['kimchi', 40], ['side', 1], ['dbox', 1]]],
+      [
+        'jbox',
+        '제육 도시락',
+        8500,
+        [
+          ['rice', 220],
+          ['pork', 120],
+          ['onion', 40],
+          ['kimchi', 40],
+          ['side', 1],
+          ['dbox', 1],
+        ],
+      ],
+      [
+        'bbox',
+        '불고기 도시락',
+        9500,
+        [
+          ['rice', 220],
+          ['beef', 100],
+          ['onion', 40],
+          ['side', 1],
+          ['dbox', 1],
+        ],
+      ],
+      [
+        'ebox',
+        '계란말이 도시락',
+        7500,
+        [
+          ['rice', 220],
+          ['egg', 3],
+          ['kimchi', 40],
+          ['side', 1],
+          ['dbox', 1],
+        ],
+      ],
     ],
   },
   etc: {
@@ -267,9 +629,40 @@ export const TPL: Record<BizKey, Template> = {
       ['dbox', '도시락 용기', '개', 250, 1],
     ],
     menus: [
-      ['salad', '닭가슴살 샐러드', 9500, [['lettuce', 120], ['breast', 100], ['ctomato', 60], ['dressing', 30]]],
-      ['jbox', '제육 도시락', 8500, [['rice', 220], ['pork', 120], ['kimchi', 40], ['egg', 1], ['dbox', 1]]],
-      ['ebox', '계란말이 도시락', 7500, [['rice', 220], ['egg', 3], ['kimchi', 40], ['dbox', 1]]],
+      [
+        'salad',
+        '닭가슴살 샐러드',
+        9500,
+        [
+          ['lettuce', 120],
+          ['breast', 100],
+          ['ctomato', 60],
+          ['dressing', 30],
+        ],
+      ],
+      [
+        'jbox',
+        '제육 도시락',
+        8500,
+        [
+          ['rice', 220],
+          ['pork', 120],
+          ['kimchi', 40],
+          ['egg', 1],
+          ['dbox', 1],
+        ],
+      ],
+      [
+        'ebox',
+        '계란말이 도시락',
+        7500,
+        [
+          ['rice', 220],
+          ['egg', 3],
+          ['kimchi', 40],
+          ['dbox', 1],
+        ],
+      ],
     ],
   },
 }
@@ -278,11 +671,3 @@ export const TPL: Record<BizKey, Template> = {
 export const FIX_NAMES = ['월세', '관리비', '전기세', '가스비', '수도세', '통신비']
 
 export const UNITS: string[] = ['g', 'ml', '개', '장', '모', '봉', '팩', '단', '병', '마리']
-
-/** 예시 메뉴 임시 사진 */
-export const SAMPLE_IMG: Record<string, string> = {
-  kjj: '/img/menu-kjj.webp',
-  jeyuk: '/img/menu-jeyuk.webp',
-  djj: '/img/menu-djj.webp',
-  egg: '/img/menu-egg.webp',
-}
